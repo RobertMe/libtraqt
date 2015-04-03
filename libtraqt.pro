@@ -2,11 +2,20 @@ TARGET = traqt
 TEMPLATE = lib
 CONFIG += staticlib
 
+QT += network
+
+DEFINES += TRAKT_API_URL=\\\"https://api-v2launch.trakt.tv\\\"
+DEFINES += TRAKT_WEB_URL=\\\"https://trakt.tv\\\"
+
 HEADERS += \
-    traktrequest.h
+    traktrequest.h \
+    traktauthenticator.h \
+    traktconnection.h
 
 SOURCES += \
-    traktrequest.cpp
+    traktrequest.cpp \
+    traktauthenticator.cpp \
+    traktconnection.cpp
 
 
 
