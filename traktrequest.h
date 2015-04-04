@@ -2,8 +2,9 @@
 #define TRAKTREQUEST_H
 
 #include <QObject>
+#include <QVariantMap>
 
-#include "traktconnection.h"
+class TraktConnection;
 
 class TraktRequest : public QObject
 {
@@ -19,7 +20,9 @@ public:
     void setPath(const QString &path);
 
     Q_INVOKABLE void send();
+
 signals:
+    void replyReceived(const QVariantMap &data, int statusCode);
 
 public slots:
 

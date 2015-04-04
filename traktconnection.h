@@ -5,8 +5,7 @@
 #include <QNetworkAccessManager>
 
 #include "traktauthenticator.h"
-
-class TraktRequest;
+#include "traktrequest.h"
 
 class TraktConnection : public QObject
 {
@@ -25,6 +24,9 @@ private:
 
     TraktAuthenticator *m_authenticator;
     QNetworkAccessManager m_nam;
+
+private slots:
+    void onReplyReceived();
 };
 
 #endif // TRAKTCONNECTION_H
