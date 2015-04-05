@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QNetworkRequest>
 
+#include "traktreply.h"
+
 class TraktAuthenticator : public QObject
 {
     Q_OBJECT
@@ -37,7 +39,7 @@ private:
     bool m_authorized;
 
 private slots:
-    void onTokenReceived(const QVariantMap &data, int statusCode);
+    void onTokenReceived(TraktReply *reply);
 };
 
 #endif // TRAKTAUTHENTICATOR_H

@@ -4,7 +4,8 @@
 
 TraktRequest::TraktRequest(QObject *parent) :
     QObject(parent),
-    m_connection(TraktConnection::instance())
+    m_connection(TraktConnection::instance()),
+    m_operation(OperationGet)
 {
 }
 
@@ -22,6 +23,16 @@ QVariantMap TraktRequest::data() const
 void TraktRequest::setData(const QVariantMap &data)
 {
     m_data = data;
+}
+
+TraktRequest::Operation TraktRequest::operation() const
+{
+    return m_operation;
+}
+
+void TraktRequest::setOperation(Operation operation)
+{
+    m_operation = operation;
 }
 
 QString TraktRequest::path() const

@@ -56,6 +56,7 @@ void TraktAuthenticator::authorize(GrantType type, const QString &token)
     }
 
     TraktRequest *request = new TraktRequest(this);
+    request->setOperation(TraktRequest::OperationPost);
     request->setPath("/oauth/token");
     request->setData(data);
     request->send();
@@ -76,9 +77,12 @@ void TraktAuthenticator::appendHeaders(QNetworkRequest &request) const
     }
 }
 
-void TraktAuthenticator::onTokenReceived(const QVariantMap &data, int statusCode)
+void TraktAuthenticator::onTokenReceived(TraktReply *reply)
 {
-    if (statusCode != 200) {
+    reply->deleteLater();
+
+    QVariantMap data = reply->asMap();
+    if (reply->statusCode() != 200) {
         qDebug() << "authorization failed" << data.value("error_description").toString();
         if (m_authorized) {
             m_authorized = false;

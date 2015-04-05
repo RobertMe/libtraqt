@@ -10,12 +10,14 @@ DEFINES += TRAKT_WEB_URL=\\\"https://trakt.tv\\\"
 HEADERS += \
     traktrequest.h \
     traktauthenticator.h \
-    traktconnection.h
+    traktconnection.h \
+    traktreply.h
 
 SOURCES += \
     traktrequest.cpp \
     traktauthenticator.cpp \
-    traktconnection.cpp
+    traktconnection.cpp \
+    traktreply.cpp
 
 
 

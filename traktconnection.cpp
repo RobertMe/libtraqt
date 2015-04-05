@@ -4,6 +4,7 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 
+#include "traktreply.h"
 #include "traktrequest.h"
 
 TraktConnection *TraktConnection::s_instance = 0;
@@ -35,7 +36,12 @@ void TraktConnection::sendRequest(TraktRequest *traktRequest)
     m_authenticator->appendHeaders(request);
 
     QJsonDocument jsonDoc = QJsonDocument::fromVariant(traktRequest->data());
-    QNetworkReply *reply = m_nam.post(request, jsonDoc.toJson());
+    QNetworkReply *reply;
+    if (traktRequest->operation() == TraktRequest::OperationPost) {
+        reply = m_nam.post(request, jsonDoc.toJson());
+    } else {
+        reply = m_nam.get(request);
+    }
     connect(reply, &QNetworkReply::finished, this, &TraktConnection::onReplyReceived);
 }
 
@@ -50,22 +56,9 @@ void TraktConnection::onReplyReceived()
     if (!reply)
         return;
 
-    reply->deleteLater();
-
-    QByteArray data = reply->readAll();
-    QJsonParseError error;
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(data, &error);
-
-    if (error.error != QJsonParseError::NoError) {
-        qDebug() << "JSON parse error:" << error.errorString() << "data: " << data;
-        return;
-    }
-
     TraktRequest *request = qobject_cast<TraktRequest*>(reply->request().originatingObject());
     if (!request)
         return;
 
-    request->deleteLater();
-    int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    emit request->replyReceived(jsonDoc.toVariant().toMap(), statusCode);
+    emit request->replyReceived(new TraktReply(request, reply));
 }
