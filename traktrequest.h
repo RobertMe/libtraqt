@@ -2,6 +2,7 @@
 #define TRAKTREQUEST_H
 
 #include <QObject>
+#include <QUrlQuery>
 #include <QVariantMap>
 
 class TraktConnection;
@@ -28,6 +29,13 @@ public:
     QString path() const;
     void setPath(const QString &path);
 
+    void setPage(int page);
+
+    void setLimit(int limit);
+
+    void addQueryItem(const QString &key, const QString &value);
+    QUrlQuery query() const;
+
     Q_INVOKABLE void send();
 
 signals:
@@ -40,6 +48,7 @@ private:
     QVariantMap m_data;
     Operation m_operation;
     QString m_path;
+    QUrlQuery m_query;
 };
 
 #endif // TRAKTREQUEST_H

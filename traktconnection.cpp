@@ -3,6 +3,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QJsonDocument>
+#include <QUrlQuery>
 
 #include "traktreply.h"
 #include "traktrequest.h"
@@ -27,6 +28,7 @@ void TraktConnection::sendRequest(TraktRequest *traktRequest)
 {
     QUrl url(TRAKT_API_URL);
     url.setPath(traktRequest->path());
+    url.setQuery(traktRequest->query());
 
     QNetworkRequest request;
     request.setUrl(url);

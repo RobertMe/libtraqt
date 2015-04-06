@@ -45,6 +45,28 @@ void TraktRequest::setPath(const QString &path)
     m_path = path;
 }
 
+void TraktRequest::setPage(int page)
+{
+    m_query.removeQueryItem("page");
+    addQueryItem("page", QString::number(page));
+}
+
+void TraktRequest::setLimit(int limit)
+{
+    m_query.removeQueryItem("limit");
+    addQueryItem("limit", QString::number(limit));
+}
+
+void TraktRequest::addQueryItem(const QString &key, const QString &value)
+{
+    m_query.addQueryItem(key, value);
+}
+
+QUrlQuery TraktRequest::query() const
+{
+    return m_query;
+}
+
 void TraktRequest::send()
 {
     m_connection->sendRequest(this);
