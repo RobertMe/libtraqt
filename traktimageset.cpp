@@ -19,14 +19,14 @@ TraktImageSet::TraktImageSet(QObject *parent) :
 TraktImageSet::TraktImageSet(const QVariantMap &data, QObject *parent) :
     QObject(parent),
     m_poster(createImages(data.value("poster"))),
-    m_fanart(0),
-    m_screenshot(0),
-    m_headshot(0),
-    m_banner(0),
-    m_logo(0),
-    m_clearart(0),
-    m_thumb(0),
-    m_avatar(0)
+    m_fanart(createImages(data.value("fanart"))),
+    m_screenshot(createImages(data.value("screenshot"))),
+    m_headshot(createImages(data.value("headshot"))),
+    m_banner(createImages(data.value("banner"))),
+    m_logo(createImages(data.value("logo"))),
+    m_clearart(createImages(data.value("clearart"))),
+    m_thumb(createImages(data.value("thumb"))),
+    m_avatar(createImages(data.value("avatar")))
 {
 }
 
