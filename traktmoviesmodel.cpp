@@ -88,3 +88,8 @@ TraktMovie *TraktMoviesModel::convertItem(const QVariantMap &item)
         return new TraktMovie(item, this);
     }
 }
+
+TraktMovie *TraktMoviesModel::at(int i) const
+{
+    return TraktPaginatedModel::at(i);
+}

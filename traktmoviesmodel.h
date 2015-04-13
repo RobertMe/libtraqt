@@ -33,6 +33,8 @@ public:
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
     TraktMovie *convertItem(const QVariantMap &item);
+
+    Q_INVOKABLE TraktMovie *at(int i) const;
 };
 
 #endif // TRAKTMOVIESMODEL_H

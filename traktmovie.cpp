@@ -2,13 +2,24 @@
 
 #include <QVariantMap>
 
+#include "traktrequest.h"
+#include "traktreply.h"
+
 TraktMovie::TraktMovie(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_year(0),
+    m_rating(0),
+    m_votes(0),
+    m_loaded(false)
 {
 }
 
 TraktMovie::TraktMovie(const QVariantMap &data, QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_year(0),
+    m_rating(0),
+    m_votes(0),
+    m_loaded(false)
 {
     m_ids = new TraktIds(data.value("ids").toMap(), this);
     m_title = data.value("title").toString();
@@ -126,12 +137,12 @@ void TraktMovie::setHomepage(QString homepage)
     emit homepageChanged();
 }
 
-int TraktMovie::rating() const
+double TraktMovie::rating() const
 {
     return m_rating;
 }
 
-void TraktMovie::setRating(int rating)
+void TraktMovie::setRating(double rating)
 {
     m_rating = rating;
     emit ratingChanged();
@@ -190,4 +201,41 @@ void TraktMovie::setImages(TraktImageSet *images)
 {
     m_images = images;
     emit imagesChanged();
+}
+
+void TraktMovie::parse(const QVariantMap &data)
+{
+    setYear(data.value("year").toInt());
+    setTagline(data.value("tagline").toString());
+    setOverview(data.value("overview").toString());
+    setReleased(data.value("released").toDate());
+    setRuntime(QTime(0, 0).addSecs(data.value("runtime").toInt() * 60));
+    setTrailer(data.value("trailer").toString());
+    setHomepage(data.value("homepage").toString());
+    setRating(data.value("rating").toDouble());
+    setVotes(data.value("votes").toInt());
+    setLanguage(data.value("language").toString());
+    setGenres(data.value("genres").toStringList());
+    setCertification(data.value("certification").toString());
+
+    m_loaded = true;
+}
+
+void TraktMovie::load()
+{
+    if (m_loaded) {
+        return;
+    }
+
+    TraktRequest *request = new TraktRequest(this);
+    request->setPath(QString("/movies/%1").arg(ids()->trakt()));
+    request->addQueryItem("extended", "full");
+    connect(request, &TraktRequest::replyReceived, this, &TraktMovie::onFullyLoaded);
+    request->send();
+}
+
+void TraktMovie::onFullyLoaded(TraktReply *reply)
+{
+    reply->deleteLater();
+    parse(reply->asMap());
 }

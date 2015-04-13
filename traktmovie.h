@@ -10,6 +10,8 @@
 #include "traktids.h"
 #include "traktimageset.h"
 
+class TraktReply;
+
 class TraktMovie : public QObject
 {
     Q_OBJECT
@@ -23,7 +25,7 @@ class TraktMovie : public QObject
     Q_PROPERTY(QDateTime updatedAt READ updatedAt WRITE setUpdatedAt NOTIFY updatedAtChanged)
     Q_PROPERTY(QString trailer READ trailer WRITE setTrailer NOTIFY trailerChanged)
     Q_PROPERTY(QString homepage READ homepage WRITE setHomepage NOTIFY homepageChanged)
-    Q_PROPERTY(int rating READ rating WRITE setRating NOTIFY ratingChanged)
+    Q_PROPERTY(double rating READ rating WRITE setRating NOTIFY ratingChanged)
     Q_PROPERTY(int votes READ votes WRITE setVotes NOTIFY votesChanged)
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QStringList genres READ genres WRITE setGenres NOTIFY genresChanged)
@@ -63,8 +65,8 @@ public:
     QString homepage() const;
     void setHomepage(QString homepage);
 
-    int rating() const;
-    void setRating(int rating);
+    double rating() const;
+    void setRating(double rating);
 
     int votes() const;
     void setVotes(int votes);
@@ -80,6 +82,9 @@ public:
 
     TraktImageSet *images() const;
     void setImages(TraktImageSet *images);
+
+    void parse(const QVariantMap &data);
+    Q_INVOKABLE void load();
 
 signals:
     void idsChanged();
@@ -116,6 +121,11 @@ private:
     QStringList m_genres;
     QString m_certification;
     TraktImageSet *m_images;
+
+    bool m_loaded;
+
+private slots:
+    void onFullyLoaded(TraktReply *reply);
 };
 
 #endif // TRAKTMOVIE_H
