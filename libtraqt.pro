@@ -18,7 +18,11 @@ HEADERS += \
     traktreply.h \
     traktids.h \
     traktimages.h \
-    traktimageset.h
+    traktimageset.h \
+    traktmodel.h \
+    traktpeoplemodel.h \
+    traktperson.h \
+    traktpeoplefiltermodel.h
 
 SOURCES += \
     traktrequest.cpp \
@@ -31,7 +35,11 @@ SOURCES += \
     traktreply.cpp \
     traktids.cpp \
     traktimages.cpp \
-    traktimageset.cpp
+    traktimageset.cpp \
+    traktmodel.cpp \
+    traktpeoplemodel.cpp \
+    traktperson.cpp \
+    traktpeoplefiltermodel.cpp
 
 
 

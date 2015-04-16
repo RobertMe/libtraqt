@@ -13,8 +13,10 @@ class TraktIds : public QObject
     Q_PROPERTY(int tmdb READ tmdb WRITE setTmdb NOTIFY tmdbChanged)
     Q_PROPERTY(int tvrage READ tvrage WRITE setTvrage NOTIFY tvrageChanged)
 public:
-    explicit TraktIds(QObject *parent = 0);
-    explicit TraktIds(const QVariantMap &data, QObject *parent = 0);
+    explicit TraktIds(const QString &type, QObject *parent = 0);
+    explicit TraktIds(const QVariantMap &data, const QString &type, QObject *parent = 0);
+
+    QString type() const;
 
     int trakt() const;
     void setTrakt(int id);
@@ -43,6 +45,7 @@ signals:
     void tvrageChanged();
 
 private:
+    QString m_type;
     int m_trakt;
     QString m_slug;
     int m_tvdb;

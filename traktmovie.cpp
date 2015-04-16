@@ -4,12 +4,14 @@
 
 #include "traktrequest.h"
 #include "traktreply.h"
+#include "traktpeoplemodel.h"
 
 TraktMovie::TraktMovie(QObject *parent) :
     QObject(parent),
     m_year(0),
     m_rating(0),
     m_votes(0),
+    m_people(0),
     m_loaded(false)
 {
 }
@@ -19,9 +21,10 @@ TraktMovie::TraktMovie(const QVariantMap &data, QObject *parent) :
     m_year(0),
     m_rating(0),
     m_votes(0),
+    m_people(0),
     m_loaded(false)
 {
-    m_ids = new TraktIds(data.value("ids").toMap(), this);
+    m_ids = new TraktIds(data.value("ids").toMap(), "movies", this);
     m_title = data.value("title").toString();
     m_year = data.value("year").toInt();
     m_images = new TraktImageSet(data.value("images").toMap(), this);
@@ -201,6 +204,14 @@ void TraktMovie::setImages(TraktImageSet *images)
 {
     m_images = images;
     emit imagesChanged();
+}
+
+TraktPeopleModel *TraktMovie::people()
+{
+    if (!m_people) {
+        m_people = new TraktPeopleModel(m_ids, this);
+    }
+    return m_people;
 }
 
 void TraktMovie::parse(const QVariantMap &data)

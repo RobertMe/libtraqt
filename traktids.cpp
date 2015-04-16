@@ -2,12 +2,15 @@
 
 #include <QVariantMap>
 
-TraktIds::TraktIds(QObject *parent) :
-    QObject(parent)
+TraktIds::TraktIds(const QString &type, QObject *parent) :
+    QObject(parent),
+    m_type(type)
 {
 }
 
-TraktIds::TraktIds(const QVariantMap &data, QObject *parent)
+TraktIds::TraktIds(const QVariantMap &data, const QString &type, QObject *parent) :
+    QObject(parent),
+    m_type(type)
 {
     m_trakt = data.value("trakt").toInt();
     m_slug = data.value("slug").toString();
@@ -15,6 +18,11 @@ TraktIds::TraktIds(const QVariantMap &data, QObject *parent)
     m_imdb = data.value("imdb").toString();
     m_tmdb = data.value("tmdb").toInt();
     m_tvrage = data.value("tvrage").toInt();
+}
+
+QString TraktIds::type() const
+{
+    return m_type;
 }
 
 int TraktIds::trakt() const

@@ -11,6 +11,7 @@
 #include "traktimageset.h"
 
 class TraktReply;
+class TraktPeopleModel;
 
 class TraktMovie : public QObject
 {
@@ -31,6 +32,7 @@ class TraktMovie : public QObject
     Q_PROPERTY(QStringList genres READ genres WRITE setGenres NOTIFY genresChanged)
     Q_PROPERTY(QString certification READ certification WRITE setCertification NOTIFY certificationChanged)
     Q_PROPERTY(TraktImageSet *images READ images WRITE setImages NOTIFY imagesChanged)
+    Q_PROPERTY(TraktPeopleModel *people READ people CONSTANT)
 public:
     explicit TraktMovie(QObject *parent = 0);
     explicit TraktMovie(const QVariantMap &data, QObject *parent = 0);
@@ -83,6 +85,8 @@ public:
     TraktImageSet *images() const;
     void setImages(TraktImageSet *images);
 
+    TraktPeopleModel *people();
+
     void parse(const QVariantMap &data);
     Q_INVOKABLE void load();
 
@@ -121,6 +125,7 @@ private:
     QStringList m_genres;
     QString m_certification;
     TraktImageSet *m_images;
+    TraktPeopleModel *m_people;
 
     bool m_loaded;
 
