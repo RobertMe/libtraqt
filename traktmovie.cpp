@@ -8,6 +8,7 @@
 
 TraktMovie::TraktMovie(QObject *parent) :
     QObject(parent),
+    m_ids(0),
     m_year(0),
     m_rating(0),
     m_votes(0),

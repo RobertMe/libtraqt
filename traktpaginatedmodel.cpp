@@ -46,3 +46,4 @@ void TraktPaginatedModel<T>::onReplyReceived(TraktReply *reply)
 }
 
 template class TraktPaginatedModel<TraktMovie*>;
+template class TraktPaginatedModel<TraktShow*>;

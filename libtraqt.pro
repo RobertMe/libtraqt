@@ -22,7 +22,10 @@ HEADERS += \
     traktmodel.h \
     traktpeoplemodel.h \
     traktperson.h \
-    traktpeoplefiltermodel.h
+    traktpeoplefiltermodel.h \
+    traktshow.h \
+    traktshowsmodel.h \
+    traktshows.h
 
 SOURCES += \
     traktrequest.cpp \
@@ -39,7 +42,10 @@ SOURCES += \
     traktmodel.cpp \
     traktpeoplemodel.cpp \
     traktperson.cpp \
-    traktpeoplefiltermodel.cpp
+    traktpeoplefiltermodel.cpp \
+    traktshow.cpp \
+    traktshowsmodel.cpp \
+    traktshows.cpp
 
 
 

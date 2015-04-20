@@ -8,6 +8,7 @@
 
 class TraktMovie;
 class TraktPerson;
+class TraktShow;
 
 template<class T>
 class TraktModel : public QAbstractItemModel

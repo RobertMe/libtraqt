@@ -70,3 +70,4 @@ void TraktModel<T>::onReplyReceived(TraktReply *reply)
 
 template class TraktModel<TraktMovie*>;
 template class TraktModel<TraktPerson*>;
+template class TraktModel<TraktShow*>;
