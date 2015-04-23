@@ -1,5 +1,7 @@
 #include "traktshows.h"
 
+#include "traktseasonsmodel.h"
+
 TraktShows::TraktShows(QObject *parent) :
     QObject(parent)
 {
@@ -21,4 +23,9 @@ TraktShowsModel *TraktShows::trending()
     request->addQueryItem("extended", "images");
 
     return new TraktShowsModel(request, this);
+}
+
+TraktSeasonsModel *TraktShows::getSeasons(TraktShow *show)
+{
+    return new TraktSeasonsModel(show);
 }

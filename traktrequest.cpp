@@ -67,7 +67,18 @@ QUrlQuery TraktRequest::query() const
     return m_query;
 }
 
+
+void TraktRequest::fire()
+{
+    connect(this, &TraktRequest::replyReceived, this, &TraktRequest::cleanup);
+    m_connection->sendRequest(this);
+}
 void TraktRequest::send()
 {
     m_connection->sendRequest(this);
+}
+
+void TraktRequest::cleanup(TraktReply *reply)
+{
+    reply->deleteLater();
 }

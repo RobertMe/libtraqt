@@ -36,12 +36,11 @@ public:
     void addQueryItem(const QString &key, const QString &value);
     QUrlQuery query() const;
 
+    Q_INVOKABLE void fire();
     Q_INVOKABLE void send();
 
 signals:
     void replyReceived(TraktReply *reply);
-
-public slots:
 
 private:
     TraktConnection *m_connection;
@@ -49,6 +48,9 @@ private:
     Operation m_operation;
     QString m_path;
     QUrlQuery m_query;
+
+private slots:
+    void cleanup(TraktReply *reply);
 };
 
 #endif // TRAKTREQUEST_H
