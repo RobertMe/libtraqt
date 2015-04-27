@@ -13,7 +13,6 @@ TraktShow::TraktShow(QObject *parent) :
     m_rating(0),
     m_votes(0),
     m_airedEpisodes(0),
-    m_people(0),
     m_loaded(false)
 {
 }
@@ -24,7 +23,6 @@ TraktShow::TraktShow(const QVariantMap &data, QObject *parent) :
     m_rating(0),
     m_votes(0),
     m_airedEpisodes(0),
-    m_people(0),
     m_loaded(false)
 {
     m_ids = new TraktIds(data.value("ids").toMap(), "shows", this);
@@ -251,14 +249,6 @@ void TraktShow::setImages(TraktImageSet *images)
 {
     m_images = images;
     emit imagesChanged();
-}
-
-TraktPeopleModel *TraktShow::people()
-{
-    if (!m_people) {
-        m_people = new TraktPeopleModel(m_ids, this);
-    }
-    return m_people;
 }
 
 void TraktShow::parse(const QVariantMap &data)

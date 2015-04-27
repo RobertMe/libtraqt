@@ -28,7 +28,8 @@ HEADERS += \
     traktshows.h \
     traktseason.h \
     traktseasonsmodel.h \
-    traktcheckin.h
+    traktcheckin.h \
+    traktpeople.h
 
 SOURCES += \
     traktrequest.cpp \
@@ -51,7 +52,8 @@ SOURCES += \
     traktshows.cpp \
     traktseason.cpp \
     traktseasonsmodel.cpp \
-    traktcheckin.cpp
+    traktcheckin.cpp \
+    traktpeople.cpp
 
 
 
