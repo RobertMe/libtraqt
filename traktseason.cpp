@@ -15,7 +15,7 @@ TraktSeason::TraktSeason(TraktShow *show) :
     m_episodeCount(0),
     m_airedEpisodes(0),
     m_images(0),
-    m_loaded(false)
+    m_show(show)
 {
 }
 
@@ -25,7 +25,7 @@ TraktSeason::TraktSeason(const QVariantMap &data, TraktShow *show) :
     m_votes(0),
     m_episodeCount(0),
     m_airedEpisodes(0),
-    m_loaded(false)
+    m_show(show)
 {
     m_ids = new TraktIds(data.value("ids").toMap(), "seasons", this);
     m_number = data.value("number").toInt();
@@ -140,25 +140,4 @@ void TraktSeason::parse(const QVariantMap &data)
     setEpisodeCount(data.value("episode_count").toInt());
     setAiredEpisodes(data.value("aired_episodes").toInt());
     setOverview(data.value("overview").toString());
-
-    m_loaded = true;
-}
-
-void TraktSeason::load()
-{
-    if (m_loaded) {
-        return;
-    }
-
-    TraktRequest *request = new TraktRequest(this);
-    request->setPath(QString("/shows/%1/seasons/%2").arg(m_show->ids()->trakt(), ids()->trakt()));
-    request->addQueryItem("extended", "full");
-    connect(request, &TraktRequest::replyReceived, this, &TraktSeason::onFullyLoaded);
-    request->send();
-}
-
-void TraktSeason::onFullyLoaded(TraktReply *reply)
-{
-    reply->deleteLater();
-    parse(reply->asMap());
 }

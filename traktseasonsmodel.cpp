@@ -12,7 +12,7 @@ TraktRequest *TraktSeasonsModel::buildRequest(TraktShow *show)
 {
     TraktRequest *request = new TraktRequest();
     request->setPath(QString("/shows/%1/seasons").arg(show->ids()->trakt()));
-    request->addQueryItem("extended", "images");
+    request->addQueryItem("extended", "full,images");
 
     return request;
 }
@@ -68,7 +68,9 @@ QHash<int, QByteArray> TraktSeasonsModel::roleNames() const
 
 TraktSeason *TraktSeasonsModel::convertItem(const QVariantMap &item)
 {
-    return new TraktSeason(item, m_show);
+    TraktSeason *season = new TraktSeason(item, m_show);
+    season->parse(item);
+    return season;
 }
 
 TraktSeason *TraktSeasonsModel::at(int i) const

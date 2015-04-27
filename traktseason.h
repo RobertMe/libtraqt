@@ -53,7 +53,6 @@ public:
     void setShow(TraktShow *show);
 
     void parse(const QVariantMap &data);
-    Q_INVOKABLE void load();
 
 signals:
     void idsChanged();
@@ -76,11 +75,6 @@ private:
     QString m_overview;
     TraktImageSet *m_images;
     TraktShow *m_show;
-
-    bool m_loaded;
-
-private slots:
-    void onFullyLoaded(TraktReply *reply);
 };
 
 #endif // TRAKTSEASON_H
