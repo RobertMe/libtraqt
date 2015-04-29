@@ -10,6 +10,7 @@ class TraktMovie;
 class TraktPerson;
 class TraktShow;
 class TraktSeason;
+class TraktEpisode;
 
 template<class T>
 class TraktModel : public QAbstractItemModel

@@ -72,3 +72,4 @@ template class TraktModel<TraktMovie*>;
 template class TraktModel<TraktPerson*>;
 template class TraktModel<TraktShow*>;
 template class TraktModel<TraktSeason*>;
+template class TraktModel<TraktEpisode*>;

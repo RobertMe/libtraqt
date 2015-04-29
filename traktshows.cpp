@@ -1,6 +1,7 @@
 #include "traktshows.h"
 
 #include "traktseasonsmodel.h"
+#include "traktepisodesmodel.h"
 
 TraktShows::TraktShows(QObject *parent) :
     QObject(parent)
@@ -27,5 +28,10 @@ TraktShowsModel *TraktShows::trending()
 
 TraktSeasonsModel *TraktShows::getSeasons(TraktShow *show)
 {
-    return new TraktSeasonsModel(show);
+    return new TraktSeasonsModel(show, this);
+}
+
+TraktEpisodesModel *TraktShows::getEpisodes(TraktSeason *season)
+{
+    return new TraktEpisodesModel(season, this);
 }

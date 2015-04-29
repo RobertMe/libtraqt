@@ -6,6 +6,7 @@
 #include "traktshowsmodel.h"
 
 class TraktSeasonsModel;
+class TraktEpisodesModel;
 
 class TraktShows : public QObject
 {
@@ -17,6 +18,8 @@ public:
     Q_INVOKABLE TraktShowsModel *trending();
 
     Q_INVOKABLE TraktSeasonsModel *getSeasons(TraktShow *show);
+
+    Q_INVOKABLE TraktEpisodesModel *getEpisodes(TraktSeason *season);
 };
 
 #endif // TRAKTSHOWS_H
