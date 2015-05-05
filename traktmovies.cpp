@@ -13,7 +13,7 @@ TraktMoviesModel *TraktMovies::popular()
     request->setPath("/movies/popular");
     request->addQueryItem("extended", "images");
 
-    return new TraktMoviesModel(request, this);
+    return new TraktMoviesModel(request);
 }
 
 TraktMoviesModel *TraktMovies::trending()
@@ -22,5 +22,5 @@ TraktMoviesModel *TraktMovies::trending()
     request->setPath("/movies/trending");
     request->addQueryItem("extended", "images");
 
-    return new TraktMoviesModel(request, this);
+    return new TraktMoviesModel(request);
 }

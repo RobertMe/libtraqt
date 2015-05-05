@@ -14,7 +14,7 @@ TraktShowsModel *TraktShows::popular()
     request->setPath("/shows/popular");
     request->addQueryItem("extended", "images");
 
-    return new TraktShowsModel(request, this);
+    return new TraktShowsModel(request);
 }
 
 TraktShowsModel *TraktShows::trending()
@@ -23,15 +23,15 @@ TraktShowsModel *TraktShows::trending()
     request->setPath("/shows/trending");
     request->addQueryItem("extended", "images");
 
-    return new TraktShowsModel(request, this);
+    return new TraktShowsModel(request);
 }
 
 TraktSeasonsModel *TraktShows::getSeasons(TraktShow *show)
 {
-    return new TraktSeasonsModel(show, this);
+    return new TraktSeasonsModel(show);
 }
 
 TraktEpisodesModel *TraktShows::getEpisodes(TraktSeason *season)
 {
-    return new TraktEpisodesModel(season, this);
+    return new TraktEpisodesModel(season);
 }
