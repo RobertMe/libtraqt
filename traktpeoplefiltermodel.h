@@ -3,6 +3,8 @@
 
 #include <QSortFilterProxyModel>
 
+class TraktPerson;
+
 class TraktPeopleFilterModel : public QSortFilterProxyModel
 {
     Q_OBJECT
@@ -12,6 +14,8 @@ public:
     void setTypeFilter(const QString &type);
 
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE;
+
+    Q_INVOKABLE TraktPerson *at(int i) const;
 
 private:
     QString m_typeFilter;

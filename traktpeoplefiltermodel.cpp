@@ -27,3 +27,14 @@ bool TraktPeopleFilterModel::filterAcceptsRow(int source_row, const QModelIndex 
 
     return m_typeFilter.isEmpty() || person->type() == m_typeFilter || (m_typeFilter == "crew" && person->type() != "cast");
 }
+
+TraktPerson *TraktPeopleFilterModel::at(int i) const
+{
+    TraktPeopleModel *model = qobject_cast<TraktPeopleModel*>(sourceModel());
+    if (!model) {
+        return 0;
+    }
+
+    int sourceIndex = mapToSource(index(i, 0, QModelIndex())).row();
+    return model->at(sourceIndex);
+}
