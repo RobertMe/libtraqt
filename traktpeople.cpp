@@ -17,3 +17,8 @@ TraktPersonMoviesModel *TraktPeople::getMovies(TraktPerson *person)
 {
     return new TraktPersonMoviesModel(person);
 }
+
+TraktPersonShowsModel *TraktPeople::getShows(TraktPerson *person)
+{
+    return new TraktPersonShowsModel(person);
+}

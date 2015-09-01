@@ -6,6 +6,7 @@
 
 #include "traktpeoplemodel.h"
 #include "traktpersonmoviesmodel.h"
+#include "traktpersonshowsmodel.h"
 
 class TraktIds;
 
@@ -18,6 +19,7 @@ public:
     Q_INVOKABLE TraktPeopleModel *people(TraktIds *ids);
 
     Q_INVOKABLE TraktPersonMoviesModel *getMovies(TraktPerson *person);
+    Q_INVOKABLE TraktPersonShowsModel *getShows(TraktPerson *person);
 
 };
 
