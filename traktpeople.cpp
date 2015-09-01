@@ -12,3 +12,8 @@ TraktPeopleModel *TraktPeople::people(TraktIds *ids)
 {
     return new TraktPeopleModel(ids);
 }
+
+TraktPersonMoviesModel *TraktPeople::getMovies(TraktPerson *person)
+{
+    return new TraktPersonMoviesModel(person);
+}

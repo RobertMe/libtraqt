@@ -5,6 +5,7 @@
 #include <QHash>
 
 #include "traktpeoplemodel.h"
+#include "traktpersonmoviesmodel.h"
 
 class TraktIds;
 
@@ -15,6 +16,8 @@ public:
     explicit TraktPeople(QObject *parent = 0);
 
     Q_INVOKABLE TraktPeopleModel *people(TraktIds *ids);
+
+    Q_INVOKABLE TraktPersonMoviesModel *getMovies(TraktPerson *person);
 
 };
 
