@@ -2,25 +2,21 @@
 
 #include <QVariantMap>
 
-#include "traktrequest.h"
-#include "traktreply.h"
 #include "traktshow.h"
 
 TraktSeason::TraktSeason(TraktShow *show) :
-    QObject(show),
-    m_ids(0),
+    TraktItem(show),
     m_number(0),
     m_rating(0),
     m_votes(0),
     m_episodeCount(0),
     m_airedEpisodes(0),
-    m_images(0),
     m_show(show)
 {
 }
 
 TraktSeason::TraktSeason(const QVariantMap &data, TraktShow *show) :
-    QObject(show),
+    TraktItem(show),
     m_rating(0),
     m_votes(0),
     m_episodeCount(0),
@@ -32,17 +28,6 @@ TraktSeason::TraktSeason(const QVariantMap &data, TraktShow *show) :
     m_images = new TraktImageSet(data.value("images").toMap(), this);
 }
 
-TraktIds *TraktSeason::ids() const
-{
-    return m_ids;
-}
-
-void TraktSeason::setIds(TraktIds *ids)
-{
-    m_ids = ids;
-    emit idsChanged();
-}
-
 int TraktSeason::number() const
 {
     return m_number;
@@ -52,6 +37,7 @@ void TraktSeason::setNumber(int number)
 {
     m_number = number;
     emit numberChanged();
+    emit titleChanged();
 }
 
 double TraktSeason::rating() const
@@ -109,17 +95,6 @@ void TraktSeason::setOverview(const QString &overview)
     emit overviewChanged();
 }
 
-TraktImageSet *TraktSeason::images() const
-{
-    return m_images;
-}
-
-void TraktSeason::setImages(TraktImageSet *images)
-{
-    m_images = images;
-    emit imagesChanged();
-}
-
 TraktShow *TraktSeason::show() const
 {
     return m_show;
@@ -132,6 +107,16 @@ void TraktSeason::setShow(TraktShow *show)
     emit showChanged();
 }
 
+QString TraktSeason::title() const
+{
+    return QString::number(m_number);
+}
+
+void TraktSeason::setTitle(const QString &title)
+{
+    Q_UNUSED(title)
+}
+
 void TraktSeason::parse(const QVariantMap &data)
 {
     setNumber(data.value("number").toInt());
@@ -140,4 +125,15 @@ void TraktSeason::parse(const QVariantMap &data)
     setEpisodeCount(data.value("episode_count").toInt());
     setAiredEpisodes(data.value("aired_episodes").toInt());
     setOverview(data.value("overview").toString());
+
+    setLoaded(true);
+}
+
+void TraktSeason::load()
+{
+}
+
+QString TraktSeason::itemUrl() const
+{
+    return QString();
 }

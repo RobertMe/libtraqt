@@ -4,15 +4,11 @@
 #include <QObject>
 #include <QDate>
 
-#include "traktids.h"
-#include "traktimageset.h"
+#include "traktitem.h"
 
-class TraktReply;
-
-class TraktPerson : public QObject
+class TraktPerson : public TraktItem
 {
     Q_OBJECT
-    Q_PROPERTY(TraktIds *ids READ ids WRITE setIds NOTIFY idsChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString biography READ biography WRITE setBiography NOTIFY biographyChanged)
     Q_PROPERTY(QDate birthday READ birthday WRITE setBirthday NOTIFY birthdayChanged)
@@ -22,13 +18,9 @@ class TraktPerson : public QObject
     Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QString character READ character WRITE setCharacter NOTIFY characterChanged)
     Q_PROPERTY(QString job READ job WRITE setJob NOTIFY jobChanged)
-    Q_PROPERTY(TraktImageSet *images READ images WRITE setImages NOTIFY imagesChanged)
 public:
     explicit TraktPerson(QObject *parent = 0);
     explicit TraktPerson(const QVariantMap &data, QObject *parent = 0);
-
-    TraktIds *ids() const;
-    void setIds(TraktIds *ids);
 
     QString name() const;
     void setName(const QString &name);
@@ -57,14 +49,12 @@ public:
     QString job() const;
     void setJob(const QString &job);
 
-    TraktImageSet *images() const;
-    void setImages(TraktImageSet *images);
+    QString title() const Q_DECL_OVERRIDE;
+    void setTitle(const QString &title) Q_DECL_OVERRIDE;
 
-    void parse(const QVariantMap &data);
-    Q_INVOKABLE void load();
+    void parse(const QVariantMap &data) Q_DECL_OVERRIDE;
 
 signals:
-    void idsChanged();
     void nameChanged();
     void biographyChanged();
     void birthdayChanged();
@@ -74,10 +64,11 @@ signals:
     void typeChanged();
     void characterChanged();
     void jobChanged();
-    void imagesChanged();
+
+protected:
+    QString itemUrl() const Q_DECL_OVERRIDE;
 
 private:
-    TraktIds *m_ids;
     QString m_name;
     QString m_biography;
     QDate m_birthday;
@@ -87,12 +78,6 @@ private:
     QString m_type;
     QString m_character;
     QString m_job;
-    TraktImageSet *m_images;
-
-    bool m_loaded;
-
-private slots:
-    void onFullyLoaded(TraktReply *reply);
 };
 
 #endif // TRAKTPERSON_H

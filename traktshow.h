@@ -6,16 +6,11 @@
 #include <QTime>
 #include <QStringList>
 
-#include "traktids.h"
-#include "traktimageset.h"
+#include "traktitem.h"
 
-class TraktReply;
-
-class TraktShow : public QObject
+class TraktShow : public TraktItem
 {
     Q_OBJECT
-    Q_PROPERTY(TraktIds *ids READ ids WRITE setIds NOTIFY idsChanged)
-    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(int year READ year WRITE setYear NOTIFY yearChanged)
     Q_PROPERTY(QString overview READ overview WRITE setOverview NOTIFY overviewChanged)
     Q_PROPERTY(QDateTime firstAired READ firstAired WRITE setFirstAired NOTIFY firstAiredChanged)
@@ -33,16 +28,9 @@ class TraktShow : public QObject
     Q_PROPERTY(QStringList availableTranslations READ availableTranslations WRITE setAvailableTranslations NOTIFY availableTranslationsChanged)
     Q_PROPERTY(QStringList genres READ genres WRITE setGenres NOTIFY genresChanged)
     Q_PROPERTY(int airedEpisodes READ airedEpisodes WRITE setAiredEpisodes NOTIFY airedEpisodesChanged)
-    Q_PROPERTY(TraktImageSet *images READ images WRITE setImages NOTIFY imagesChanged)
 public:
     explicit TraktShow(QObject *parent = 0);
     explicit TraktShow(const QVariantMap &data, QObject *parent = 0);
-
-    TraktIds *ids() const;
-    void setIds(TraktIds *ids);
-
-    QString title() const;
-    void setTitle(const QString &title);
 
     int year() const;
     void setYear(int year);
@@ -95,15 +83,9 @@ public:
     int airedEpisodes() const;
     void setAiredEpisodes(int airedEpisodes);
 
-    TraktImageSet *images() const;
-    void setImages(TraktImageSet *images);
-
-    void parse(const QVariantMap &data);
-    Q_INVOKABLE void load();
+    void parse(const QVariantMap &data) Q_DECL_OVERRIDE;
 
 signals:
-    void idsChanged();
-    void titleChanged();
     void yearChanged();
     void overviewChanged();
     void firstAiredChanged();
@@ -121,11 +103,11 @@ signals:
     void availableTranslationsChanged();
     void genresChanged();
     void airedEpisodesChanged();
-    void imagesChanged();
+
+protected:
+    QString itemUrl() const Q_DECL_OVERRIDE;
 
 private:
-    TraktIds *m_ids;
-    QString m_title;
     int m_year;
     QString m_overview;
     QDateTime m_firstAired;
@@ -143,12 +125,6 @@ private:
     QStringList m_availableTranslations;
     QStringList m_genres;
     int m_airedEpisodes;
-    TraktImageSet *m_images;
-
-    bool m_loaded;
-
-private slots:
-    void onFullyLoaded(TraktReply *reply);
 };
 
 #endif // TRAKTSHOW_H

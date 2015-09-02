@@ -6,29 +6,16 @@
 #include "traktreply.h"
 
 TraktPerson::TraktPerson(QObject *parent) :
-    QObject(parent),
-    m_loaded(false)
+    TraktItem(parent)
 {
 }
 
 TraktPerson::TraktPerson(const QVariantMap &data, QObject *parent) :
-    QObject(parent),
-    m_loaded(false)
+    TraktItem(parent)
 {
     m_ids = new TraktIds(data.value("ids").toMap(), "people", this);
     m_name = data.value("name").toString();
     m_images = new TraktImageSet(data.value("images").toMap(), this);
-}
-
-TraktIds *TraktPerson::ids() const
-{
-    return m_ids;
-}
-
-void TraktPerson::setIds(TraktIds *ids)
-{
-    m_ids = ids;
-    emit idsChanged();
 }
 
 QString TraktPerson::name() const
@@ -40,6 +27,7 @@ void TraktPerson::setName(const QString &name)
 {
     m_name = name;
     emit nameChanged();
+    emit titleChanged();
 }
 
 QString TraktPerson::biography() const
@@ -130,15 +118,14 @@ void TraktPerson::setJob(const QString &job)
     emit jobChanged();
 }
 
-TraktImageSet *TraktPerson::images() const
+QString TraktPerson::title() const
 {
-    return m_images;
+    return m_name;
 }
 
-void TraktPerson::setImages(TraktImageSet *images)
+void TraktPerson::setTitle(const QString &title)
 {
-    m_images = images;
-    emit imagesChanged();
+    Q_UNUSED(title)
 }
 
 void TraktPerson::parse(const QVariantMap &data)
@@ -149,24 +136,10 @@ void TraktPerson::parse(const QVariantMap &data)
     setBirthplace(data.value("birthplace").toString());
     setHomepage(data.value("homepage").toString());
 
-    m_loaded = true;
+    setLoaded(true);
 }
 
-void TraktPerson::load()
+QString TraktPerson::itemUrl() const
 {
-    if (m_loaded) {
-        return;
-    }
-
-    TraktRequest *request = new TraktRequest(this);
-    request->setPath(QString("/people/%1").arg(ids()->trakt()));
-    request->addQueryItem("extended", "full");
-    connect(request, &TraktRequest::replyReceived, this, &TraktPerson::onFullyLoaded);
-    request->send();
-}
-
-void TraktPerson::onFullyLoaded(TraktReply *reply)
-{
-    reply->deleteLater();
-    parse(reply->asMap());
+    return QString("/people/%1").arg(ids()->trakt());
 }

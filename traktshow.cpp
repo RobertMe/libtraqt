@@ -2,55 +2,28 @@
 
 #include <QVariantMap>
 
-#include "traktrequest.h"
-#include "traktreply.h"
 #include "traktpeoplemodel.h"
 
 TraktShow::TraktShow(QObject *parent) :
-    QObject(parent),
-    m_ids(0),
+    TraktItem(parent),
     m_year(0),
     m_rating(0),
     m_votes(0),
-    m_airedEpisodes(0),
-    m_loaded(false)
+    m_airedEpisodes(0)
 {
 }
 
 TraktShow::TraktShow(const QVariantMap &data, QObject *parent) :
-    QObject(parent),
+    TraktItem(parent),
     m_year(0),
     m_rating(0),
     m_votes(0),
-    m_airedEpisodes(0),
-    m_loaded(false)
+    m_airedEpisodes(0)
 {
     m_ids = new TraktIds(data.value("ids").toMap(), "shows", this);
     m_title = data.value("title").toString();
     m_year = data.value("year").toInt();
     m_images = new TraktImageSet(data.value("images").toMap(), this);
-}
-
-TraktIds *TraktShow::ids() const
-{
-    return m_ids;
-}
-
-void TraktShow::setIds(TraktIds *ids)
-{
-    m_ids = ids;
-    emit idsChanged();
-}
-
-QString TraktShow::title() const
-{
-    return m_title;
-}
-
-void TraktShow::setTitle(const QString &title)
-{
-    m_title = title;
-    emit titleChanged();
 }
 
 int TraktShow::year() const
@@ -240,17 +213,6 @@ void TraktShow::setAiredEpisodes(int airedEpisodes)
     emit airedEpisodesChanged();
 }
 
-TraktImageSet *TraktShow::images() const
-{
-    return m_images;
-}
-
-void TraktShow::setImages(TraktImageSet *images)
-{
-    m_images = images;
-    emit imagesChanged();
-}
-
 void TraktShow::parse(const QVariantMap &data)
 {
     setYear(data.value("year").toInt());
@@ -271,24 +233,10 @@ void TraktShow::parse(const QVariantMap &data)
     setGenres(data.value("genres").toStringList());
     setAiredEpisodes(data.value("aired_episodes").toInt());
 
-    m_loaded = true;
+    setLoaded(true);
 }
 
-void TraktShow::load()
+QString TraktShow::itemUrl() const
 {
-    if (m_loaded) {
-        return;
-    }
-
-    TraktRequest *request = new TraktRequest(this);
-    request->setPath(QString("/shows/%1").arg(ids()->trakt()));
-    request->addQueryItem("extended", "full");
-    connect(request, &TraktRequest::replyReceived, this, &TraktShow::onFullyLoaded);
-    request->send();
-}
-
-void TraktShow::onFullyLoaded(TraktReply *reply)
-{
-    reply->deleteLater();
-    parse(reply->asMap());
+    return QString("/shows/%1").arg(ids()->trakt());
 }

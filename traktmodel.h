@@ -6,6 +6,7 @@
 #include "traktrequest.h"
 #include "traktreply.h"
 
+class TraktItem;
 class TraktMovie;
 class TraktPerson;
 class TraktShow;
@@ -15,7 +16,7 @@ class TraktEpisode;
 class BaseTraktModel
 {
 public:
-    virtual QObject *get(int i) const = 0;
+    virtual TraktItem *get(int i) const = 0;
 };
 
 template<class T>
@@ -30,7 +31,7 @@ public:
     virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     virtual int columnCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
-    QObject *get(int i) const;
+    TraktItem *get(int i) const;
     T at(int i) const;
 
 protected:

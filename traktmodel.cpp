@@ -43,9 +43,9 @@ int TraktModel<T>::columnCount(const QModelIndex &parent) const
 }
 
 template<class T>
-QObject *TraktModel<T>::get(int i) const
+TraktItem *TraktModel<T>::get(int i) const
 {
-    return (QObject*)at(i);
+    return (TraktItem*)at(i);
 }
 
 template<class T>

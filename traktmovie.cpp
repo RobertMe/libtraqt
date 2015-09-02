@@ -2,52 +2,24 @@
 
 #include <QVariantMap>
 
-#include "traktrequest.h"
-#include "traktreply.h"
-
 TraktMovie::TraktMovie(QObject *parent) :
-    QObject(parent),
-    m_ids(0),
+    TraktItem(parent),
     m_year(0),
     m_rating(0),
-    m_votes(0),
-    m_loaded(false)
+    m_votes(0)
 {
 }
 
 TraktMovie::TraktMovie(const QVariantMap &data, QObject *parent) :
-    QObject(parent),
+    TraktItem(parent),
     m_year(0),
     m_rating(0),
-    m_votes(0),
-    m_loaded(false)
+    m_votes(0)
 {
     m_ids = new TraktIds(data.value("ids").toMap(), "movies", this);
     m_title = data.value("title").toString();
     m_year = data.value("year").toInt();
     m_images = new TraktImageSet(data.value("images").toMap(), this);
-}
-
-TraktIds *TraktMovie::ids() const
-{
-    return m_ids;
-}
-
-void TraktMovie::setIds(TraktIds *ids)
-{
-    m_ids = ids;
-    emit idsChanged();
-}
-
-QString TraktMovie::title() const
-{
-    return m_title;
-}
-
-void TraktMovie::setTitle(QString title)
-{
-    m_title = title;
-    emit titleChanged();
 }
 
 int TraktMovie::year() const
@@ -193,17 +165,6 @@ void TraktMovie::setCertification(QString certification)
     emit certificationChanged();
 }
 
-TraktImageSet *TraktMovie::images() const
-{
-    return m_images;
-}
-
-void TraktMovie::setImages(TraktImageSet *images)
-{
-    m_images = images;
-    emit imagesChanged();
-}
-
 void TraktMovie::parse(const QVariantMap &data)
 {
     setYear(data.value("year").toInt());
@@ -219,24 +180,10 @@ void TraktMovie::parse(const QVariantMap &data)
     setGenres(data.value("genres").toStringList());
     setCertification(data.value("certification").toString());
 
-    m_loaded = true;
+    setLoaded(true);
 }
 
-void TraktMovie::load()
+QString TraktMovie::itemUrl() const
 {
-    if (m_loaded) {
-        return;
-    }
-
-    TraktRequest *request = new TraktRequest(this);
-    request->setPath(QString("/movies/%1").arg(ids()->trakt()));
-    request->addQueryItem("extended", "full");
-    connect(request, &TraktRequest::replyReceived, this, &TraktMovie::onFullyLoaded);
-    request->send();
-}
-
-void TraktMovie::onFullyLoaded(TraktReply *reply)
-{
-    reply->deleteLater();
-    parse(reply->asMap());
+    return QString("/movies/%1").arg(ids()->trakt());
 }

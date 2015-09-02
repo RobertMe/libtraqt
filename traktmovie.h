@@ -7,16 +7,11 @@
 #include <QStringList>
 #include <QTime>
 
-#include "traktids.h"
-#include "traktimageset.h"
+#include "traktitem.h"
 
-class TraktReply;
-
-class TraktMovie : public QObject
+class TraktMovie : public TraktItem
 {
     Q_OBJECT
-    Q_PROPERTY(TraktIds *ids READ ids WRITE setIds NOTIFY idsChanged)
-    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(int year READ year WRITE setYear NOTIFY yearChanged)
     Q_PROPERTY(QString tagline READ tagline WRITE setTagline NOTIFY taglineChanged)
     Q_PROPERTY(QString overview READ overview WRITE setOverview NOTIFY overviewChanged)
@@ -30,16 +25,9 @@ class TraktMovie : public QObject
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QStringList genres READ genres WRITE setGenres NOTIFY genresChanged)
     Q_PROPERTY(QString certification READ certification WRITE setCertification NOTIFY certificationChanged)
-    Q_PROPERTY(TraktImageSet *images READ images WRITE setImages NOTIFY imagesChanged)
 public:
     explicit TraktMovie(QObject *parent = 0);
     explicit TraktMovie(const QVariantMap &data, QObject *parent = 0);
-
-    TraktIds *ids() const;
-    void setIds(TraktIds *ids);
-
-    QString title() const;
-    void setTitle(QString title);
 
     int year() const;
     void setYear(int year);
@@ -80,15 +68,9 @@ public:
     QString certification() const;
     void setCertification(QString certification);
 
-    TraktImageSet *images() const;
-    void setImages(TraktImageSet *images);
-
-    void parse(const QVariantMap &data);
-    Q_INVOKABLE void load();
+    void parse(const QVariantMap &data) Q_DECL_OVERRIDE;
 
 signals:
-    void idsChanged();
-    void titleChanged();
     void yearChanged();
     void taglineChanged();
     void overviewChanged();
@@ -102,11 +84,11 @@ signals:
     void languageChanged();
     void genresChanged();
     void certificationChanged();
-    void imagesChanged();
+
+protected:
+    QString itemUrl() const Q_DECL_OVERRIDE;
 
 private:
-    TraktIds *m_ids;
-    QString m_title;
     int m_year;
     QString m_tagline;
     QString m_overview;
@@ -120,12 +102,6 @@ private:
     QString m_language;
     QStringList m_genres;
     QString m_certification;
-    TraktImageSet *m_images;
-
-    bool m_loaded;
-
-private slots:
-    void onFullyLoaded(TraktReply *reply);
 };
 
 #endif // TRAKTMOVIE_H

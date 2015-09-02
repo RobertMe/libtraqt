@@ -4,54 +4,26 @@
 
 #include "traktseason.h"
 #include "traktshow.h"
-#include "traktrequest.h"
-#include "traktreply.h"
-#include "traktpeoplemodel.h"
 
 TraktEpisode::TraktEpisode(TraktSeason *season) :
-    QObject(season),
-    m_ids(0),
+    TraktItem(season),
     m_number(0),
     m_rating(0),
     m_votes(0),
-    m_season(season),
-    m_loaded(false)
+    m_season(season)
 {
 }
 
 TraktEpisode::TraktEpisode(const QVariantMap &data, TraktSeason *season) :
-    QObject(season),
+    TraktItem(season),
     m_rating(0),
     m_votes(0),
-    m_season(season),
-    m_loaded(false)
+    m_season(season)
 {
     m_ids = new TraktIds(data.value("ids").toMap(), "shows", this);
     m_title = data.value("title").toString();
     m_number = data.value("number").toInt();
     m_images = new TraktImageSet(data.value("images").toMap(), this);
-}
-
-TraktIds *TraktEpisode::ids() const
-{
-    return m_ids;
-}
-
-void TraktEpisode::setIds(TraktIds *ids)
-{
-    m_ids = ids;
-    emit idsChanged();
-}
-
-QString TraktEpisode::title() const
-{
-    return m_title;
-}
-
-void TraktEpisode::setTitle(const QString &title)
-{
-    m_title = title;
-    emit titleChanged();
 }
 
 int TraktEpisode::number() const
@@ -131,17 +103,6 @@ void TraktEpisode::setAvailableTranslations(const QStringList &availableTranslat
     emit availableTranslationsChanged();
 }
 
-TraktImageSet *TraktEpisode::images() const
-{
-    return m_images;
-}
-
-void TraktEpisode::setImages(TraktImageSet *images)
-{
-    m_images = images;
-    emit imagesChanged();
-}
-
 TraktSeason *TraktEpisode::season() const
 {
     return m_season;
@@ -164,24 +125,10 @@ void TraktEpisode::parse(const QVariantMap &data)
     setVotes(data.value("votes").toInt());
     setAvailableTranslations(data.value("available_translations").toStringList());
 
-    m_loaded = true;
+    setLoaded(true);
 }
 
-void TraktEpisode::load()
+QString TraktEpisode::itemUrl() const
 {
-    if (m_loaded) {
-        return;
-    }
-
-    TraktRequest *request = new TraktRequest(this);
-    request->setPath(QString("/shows/%1/seasons/%2/episodes/%3").arg(m_season->show()->ids()->trakt()).arg(m_season->number()).arg(number()));
-    request->addQueryItem("extended", "full");
-    connect(request, &TraktRequest::replyReceived, this, &TraktEpisode::onFullyLoaded);
-    request->send();
-}
-
-void TraktEpisode::onFullyLoaded(TraktReply *reply)
-{
-    reply->deleteLater();
-    parse(reply->asMap());
+    return QString("/shows/%1/seasons/%2/episodes/%3").arg(m_season->show()->ids()->trakt()).arg(m_season->number()).arg(number());
 }
