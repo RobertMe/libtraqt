@@ -7,7 +7,7 @@ TraktPaginatedModel<T>::TraktPaginatedModel(TraktRequest *request, QObject *pare
     m_canFetchMore(false),
     m_currentPage(1)
 {
-    connect(request, &TraktRequest::replyReceived, this, &TraktPaginatedModel::onReplyReceived);
+    this->connect(request, &TraktRequest::replyReceived, this, &TraktPaginatedModel::onReplyReceived);
     m_request->setLimit(15);
     fetchMore(QModelIndex());
 }
@@ -39,7 +39,7 @@ void TraktPaginatedModel<T>::onReplyReceived(TraktReply *reply)
         newItems.append(this->convertItem(item.toMap()));
     }
 
-    beginInsertRows(QModelIndex(), this->m_items.size(), this->m_items.size() + newItems.size() - 1);
+    this->beginInsertRows(QModelIndex(), this->m_items.size(), this->m_items.size() + newItems.size() - 1);
     this->m_items.append(newItems);
     m_canFetchMore = newItems.size() == 15;
     this->endInsertRows();
