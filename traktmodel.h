@@ -12,8 +12,14 @@ class TraktShow;
 class TraktSeason;
 class TraktEpisode;
 
+class BaseTraktModel
+{
+public:
+    virtual QObject *get(int i) const = 0;
+};
+
 template<class T>
-class TraktModel : public QAbstractItemModel
+class TraktModel : public QAbstractItemModel, public BaseTraktModel
 {
 public:
     explicit TraktModel(TraktRequest *request, QObject *parent = 0);
@@ -24,6 +30,7 @@ public:
     virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
     virtual int columnCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
+    QObject *get(int i) const;
     T at(int i) const;
 
 protected:

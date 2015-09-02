@@ -43,6 +43,12 @@ int TraktModel<T>::columnCount(const QModelIndex &parent) const
 }
 
 template<class T>
+QObject *TraktModel<T>::get(int i) const
+{
+    return (QObject*)at(i);
+}
+
+template<class T>
 T TraktModel<T>::at(int i) const
 {
     if (i < 0 || i >= m_items.size()) {
