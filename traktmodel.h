@@ -1,8 +1,7 @@
 #ifndef TRAKTMODEL_H
 #define TRAKTMODEL_H
 
-#include <QAbstractItemModel>
-
+#include "traktmodelbase.h"
 #include "traktrequest.h"
 #include "traktreply.h"
 
@@ -13,23 +12,13 @@ class TraktShow;
 class TraktSeason;
 class TraktEpisode;
 
-class BaseTraktModel
-{
-public:
-    virtual TraktItem *get(int i) const = 0;
-};
-
 template<class T>
-class TraktModel : public QAbstractItemModel, public BaseTraktModel
+class TraktModel : public TraktModelBase
 {
 public:
     explicit TraktModel(TraktRequest *request, QObject *parent = 0);
 
-    virtual QModelIndex index(int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
-    virtual QModelIndex parent(const QModelIndex &child) const Q_DECL_OVERRIDE;
-
     virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
-    virtual int columnCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
     TraktItem *get(int i) const;
     T at(int i) const;

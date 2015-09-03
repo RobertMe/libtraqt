@@ -33,6 +33,9 @@ void TraktPersonShowsModel::onReplyReceived(TraktReply *reply)
     beginResetModel();
     m_items.append(newItems);
     endResetModel();
+
+    this->setLoading(false);
+    this->setLoaded(true);
 }
 
 void TraktPersonShowsModel::addItems(QList<TraktShow*> &list, const QVariantList &items)

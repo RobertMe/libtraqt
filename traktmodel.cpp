@@ -2,30 +2,17 @@
 
 template<class T>
 TraktModel<T>::TraktModel(TraktRequest *request, QObject *parent) :
-    QAbstractItemModel(parent)
+    TraktModel(parent)
 {
     connect(request, &TraktRequest::replyReceived, this, &TraktModel::onReplyReceived);
     request->send();
+    setLoading(true);
 }
 
 template<class T>
 TraktModel<T>::TraktModel(QObject *parent) :
-    QAbstractItemModel(parent)
+    TraktModelBase(parent)
 {
-}
-
-template<class T>
-QModelIndex TraktModel<T>::index(int row, int column, const QModelIndex &parent) const
-{
-    Q_UNUSED(parent)
-    return createIndex(row, column);
-}
-
-template<class T>
-QModelIndex TraktModel<T>::parent(const QModelIndex &child) const
-{
-    Q_UNUSED(child)
-    return QModelIndex();
 }
 
 template<class T>
@@ -33,13 +20,6 @@ int TraktModel<T>::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_items.size();
-}
-
-template<class T>
-int TraktModel<T>::columnCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent)
-    return 1;
 }
 
 template<class T>
@@ -72,6 +52,9 @@ void TraktModel<T>::onReplyReceived(TraktReply *reply)
     beginResetModel();
     m_items = newItems;
     endResetModel();
+
+    setLoading(false);
+    setLoaded(true);
 }
 
 template class TraktModel<TraktMovie*>;

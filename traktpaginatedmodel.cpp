@@ -18,6 +18,7 @@ void TraktPaginatedModel<T>::fetchMore(const QModelIndex &parent)
     Q_UNUSED(parent)
     m_request->setPage(m_currentPage++);
     m_request->send();
+    this->setLoading(true);
 }
 
 template<class T>
@@ -43,6 +44,9 @@ void TraktPaginatedModel<T>::onReplyReceived(TraktReply *reply)
     this->m_items.append(newItems);
     m_canFetchMore = newItems.size() == 15;
     this->endInsertRows();
+
+    this->setLoading(false);
+    this->setLoaded(true);
 }
 
 template class TraktPaginatedModel<TraktMovie*>;

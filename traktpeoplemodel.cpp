@@ -117,6 +117,9 @@ void TraktPeopleModel::onReplyReceived(TraktReply *reply)
     beginResetModel();
     m_items.append(newItems);
     endResetModel();
+
+    this->setLoading(false);
+    this->setLoaded(true);
 }
 
 void TraktPeopleModel::addItems(QList<TraktPerson*> &list, const QVariantList &items, const QString &type)

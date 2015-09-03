@@ -33,6 +33,9 @@ void TraktPersonMoviesModel::onReplyReceived(TraktReply *reply)
     beginResetModel();
     m_items.append(newItems);
     endResetModel();
+
+    this->setLoading(false);
+    this->setLoaded(true);
 }
 
 void TraktPersonMoviesModel::addItems(QList<TraktMovie *> &list, const QVariantList &items)
