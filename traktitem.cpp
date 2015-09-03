@@ -46,9 +46,15 @@ void TraktItem::setImages(TraktImageSet *images)
     emit imagesChanged();
 }
 
+bool TraktItem::loaded() const
+{
+    return m_loaded;
+}
+
 void TraktItem::setLoaded(bool loaded)
 {
     m_loaded = loaded;
+    emit loadedChanged();
 }
 
 void TraktItem::load()

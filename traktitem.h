@@ -14,6 +14,7 @@ class TraktItem : public QObject
     Q_PROPERTY(TraktIds *ids READ ids WRITE setIds NOTIFY idsChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(TraktImageSet *images READ images WRITE setImages NOTIFY imagesChanged)
+    Q_PROPERTY(bool loaded READ loaded NOTIFY loadedChanged)
 public:
     explicit TraktItem(QObject *parent = 0);
 
@@ -26,6 +27,8 @@ public:
     virtual TraktImageSet *images() const;
     virtual void setImages(TraktImageSet *images);
 
+    bool loaded() const;
+
     virtual void parse(const QVariantMap &data) = 0;
     Q_INVOKABLE virtual void load();
 
@@ -33,6 +36,7 @@ signals:
     void idsChanged();
     void titleChanged();
     void imagesChanged();
+    void loadedChanged();
 
 protected:
     virtual QString itemUrl() const = 0;
