@@ -10,6 +10,7 @@ class TraktAuthenticator : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool authorized READ authorized NOTIFY authorizedChanged)
+    Q_PROPERTY(bool authorizing READ authorizing NOTIFY authorizingChanged)
 
     Q_ENUMS(GrantType)
 public:
@@ -26,10 +27,12 @@ public:
     void appendHeaders(QNetworkRequest &request) const;
 
     bool authorized() const;
+    bool authorizing() const;
 
 signals:
     void tokensReceived(const QString &refreshToken);
     void authorizedChanged();
+    void authorizingChanged();
 
 private:
     QString m_clientId;
@@ -37,6 +40,7 @@ private:
     QString m_redirectUrl;
     QString m_accessToken;
     bool m_authorized;
+    bool m_authorizing;
 
 private slots:
     void onTokenReceived(TraktReply *reply);

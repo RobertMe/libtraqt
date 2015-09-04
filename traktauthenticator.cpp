@@ -14,7 +14,8 @@ TraktAuthenticator::TraktAuthenticator(const QString clientId, const QString &cl
     m_clientId(clientId),
     m_clientSecret(clientSecret),
     m_redirectUrl(redirectUrl),
-    m_authorized(false)
+    m_authorized(false),
+    m_authorizing(false)
 {
 }
 
@@ -48,11 +49,6 @@ void TraktAuthenticator::authorize(GrantType type, const QString &token)
     } else if (type == GrantRefreshToken) {
         data["refresh_token"] = token;
         data["grant_type"] = "refresh_token";
-
-        if (!m_authorized) {
-            m_authorized = true;
-            emit authorizedChanged();
-        }
     }
 
     TraktRequest *request = new TraktRequest(this);
@@ -62,11 +58,19 @@ void TraktAuthenticator::authorize(GrantType type, const QString &token)
     request->send();
 
     connect(request, &TraktRequest::replyReceived, this, &TraktAuthenticator::onTokenReceived);
+
+    m_authorizing = true;
+    emit authorizingChanged();
 }
 
 bool TraktAuthenticator::authorized() const
 {
     return m_authorized;
+}
+
+bool TraktAuthenticator::authorizing() const
+{
+    return m_authorizing;
 }
 
 void TraktAuthenticator::appendHeaders(QNetworkRequest &request) const
@@ -98,5 +102,10 @@ void TraktAuthenticator::onTokenReceived(TraktReply *reply)
     if (!m_authorized) {
         m_authorized = true;
         emit authorizedChanged();
+    }
+
+    if (m_authorizing) {
+        m_authorizing = false;
+        emit authorizingChanged();
     }
 }
