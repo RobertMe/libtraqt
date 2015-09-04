@@ -9,11 +9,15 @@ class TraktPaginatedModel : public TraktModel<T>
 public:
     explicit TraktPaginatedModel(TraktRequest *request, QObject *parent = 0);
 
-    void fetchMore(const QModelIndex &parent) Q_DECL_OVERRIDE;
+    virtual void fetchMore(const QModelIndex &parent) Q_DECL_OVERRIDE;
     bool canFetchMore(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
-private:
+protected:
+    void reset();
+
     TraktRequest *m_request;
+
+private:
     bool m_canFetchMore;
     int m_currentPage;
 

@@ -20,7 +20,7 @@ TraktEpisode::TraktEpisode(const QVariantMap &data, TraktSeason *season) :
     m_votes(0),
     m_season(season)
 {
-    m_ids = new TraktIds(data.value("ids").toMap(), "shows", this);
+    m_ids = new TraktIds(data.value("ids").toMap(), "episodes", this);
     m_title = data.value("title").toString();
     m_number = data.value("number").toInt();
     m_images = new TraktImageSet(data.value("images").toMap(), this);

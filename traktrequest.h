@@ -34,6 +34,8 @@ public:
     void setLimit(int limit);
 
     void addQueryItem(const QString &key, const QString &value);
+    void replaceQueryItem(const QString &key, const QString &value);
+    void removeQueryItem(const QString &key);
     QUrlQuery query() const;
 
     Q_INVOKABLE void fire();

@@ -57,6 +57,7 @@ void TraktModel<T>::onReplyReceived(TraktReply *reply)
     setLoaded(true);
 }
 
+template class TraktModel<TraktItem*>;
 template class TraktModel<TraktMovie*>;
 template class TraktModel<TraktPerson*>;
 template class TraktModel<TraktShow*>;

@@ -21,7 +21,7 @@ public:
     virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
     TraktItem *get(int i) const;
-    T at(int i) const;
+    virtual T at(int i) const;
 
 protected:
     explicit TraktModel(QObject *parent = 0);

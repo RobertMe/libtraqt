@@ -35,7 +35,8 @@ HEADERS += \
     traktpersonmoviesmodel.h \
     traktpersonshowsmodel.h \
     traktitem.h \
-    traktmodelbase.h
+    traktmodelbase.h \
+    traktsearchmodel.h
 
 SOURCES += \
     traktrequest.cpp \
@@ -65,7 +66,8 @@ SOURCES += \
     traktpersonmoviesmodel.cpp \
     traktpersonshowsmodel.cpp \
     traktitem.cpp \
-    traktmodelbase.cpp
+    traktmodelbase.cpp \
+    traktsearchmodel.cpp
 
 
 

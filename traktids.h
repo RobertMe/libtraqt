@@ -12,6 +12,7 @@ class TraktIds : public QObject
     Q_PROPERTY(QString imdb READ imdb WRITE setImdb NOTIFY imdbChanged)
     Q_PROPERTY(int tmdb READ tmdb WRITE setTmdb NOTIFY tmdbChanged)
     Q_PROPERTY(int tvrage READ tvrage WRITE setTvrage NOTIFY tvrageChanged)
+    Q_PROPERTY(QString type READ type)
 public:
     explicit TraktIds(const QString &type, QObject *parent = 0);
     explicit TraktIds(const QVariantMap &data, const QString &type, QObject *parent = 0);
