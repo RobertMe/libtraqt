@@ -9,7 +9,7 @@ TraktPeopleModel::TraktPeopleModel(TraktIds *ids, QObject *parent) :
 {
 }
 
-TraktRequest *TraktPeopleModel::buildRequest(TraktIds *ids)
+TraktRequest *TraktPeopleModel::buildRequest(TraktIds *ids) const
 {
     TraktRequest *request = new TraktRequest();
     request->setPath(QString("/%1/%2/people").arg(ids->type()).arg(ids->trakt()));

@@ -151,5 +151,5 @@ QString TraktPerson::itemUrl() const
 
 void TraktPerson::connectImageChanged(TraktImageSet *images) const
 {
-    connect(images, SIGNAL(headshotChanged()), this, SIGNAL(imageChanged()));
+    connect(images, &TraktImageSet::headshotChanged, this, &TraktPerson::imageChanged);
 }

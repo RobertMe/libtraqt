@@ -42,8 +42,8 @@ public:
     TraktShow *show() const;
     void setShow(TraktShow *show);
 
-    QString title() const;
-    void setTitle(const QString &title);
+    QString title() const Q_DECL_OVERRIDE;
+    void setTitle(const QString &title) Q_DECL_OVERRIDE;
 
     void parse(const QVariantMap &data) Q_DECL_OVERRIDE;
     void load() Q_DECL_OVERRIDE;

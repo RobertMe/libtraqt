@@ -140,5 +140,5 @@ QString TraktEpisode::itemUrl() const
 
 void TraktEpisode::connectImageChanged(TraktImageSet *images) const
 {
-    connect(images, SIGNAL(screenshotChanged()), this, SIGNAL(imageChanged()));
+    connect(images, &TraktImageSet::screenshotChanged, this, &TraktEpisode::imageChanged);
 }

@@ -93,5 +93,5 @@ void TraktItem::onFullyLoaded(TraktReply *reply)
 
 void TraktItem::connectImageChanged(TraktImageSet *images) const
 {
-    connect(images, SIGNAL(posterChanged()), this, SIGNAL(imageChanged()));
+    connect(images, &TraktImageSet::posterChanged, this, &TraktItem::imageChanged);
 }

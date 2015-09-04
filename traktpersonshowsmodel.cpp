@@ -7,7 +7,7 @@ TraktPersonShowsModel::TraktPersonShowsModel(TraktPerson *person, QObject *paren
 {
 }
 
-TraktRequest *TraktPersonShowsModel::buildRequest(TraktPerson *person)
+TraktRequest *TraktPersonShowsModel::buildRequest(TraktPerson *person) const
 {
     TraktRequest *request = new TraktRequest();
     request->setPath(QString("/people/%1/shows").arg(person->ids()->trakt()));

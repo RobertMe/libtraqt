@@ -28,18 +28,18 @@ public:
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
-    TraktPerson *convertItem(const QVariantMap &item);
+    TraktPerson *convertItem(const QVariantMap &item) Q_DECL_OVERRIDE;
 
-    Q_INVOKABLE TraktPerson *at(int i) const;
+    Q_INVOKABLE TraktPerson *at(int i) const Q_DECL_OVERRIDE;
 
     TraktPeopleFilterModel *cast();
     TraktPeopleFilterModel *crew();
 
 protected slots:
-    virtual void onReplyReceived(TraktReply *reply);
+    virtual void onReplyReceived(TraktReply *reply) Q_DECL_OVERRIDE;
 
 private:
-    TraktRequest *buildRequest(TraktIds *ids);
+    TraktRequest *buildRequest(TraktIds *ids) const;
     void addItems(QList<TraktPerson*> &list, const QVariantList &items, const QString &type);
 
     TraktPeopleFilterModel *m_cast;

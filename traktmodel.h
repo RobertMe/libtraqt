@@ -20,7 +20,7 @@ public:
 
     virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
 
-    TraktItem *get(int i) const;
+    TraktItem *get(int i) const Q_DECL_OVERRIDE;
     virtual T at(int i) const;
 
 protected:

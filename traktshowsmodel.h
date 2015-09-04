@@ -36,9 +36,9 @@ public:
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
-    TraktShow *convertItem(const QVariantMap &item);
+    TraktShow *convertItem(const QVariantMap &item) Q_DECL_OVERRIDE;
 
-    Q_INVOKABLE TraktShow *at(int i) const;
+    Q_INVOKABLE TraktShow *at(int i) const Q_DECL_OVERRIDE;
 
 };
 

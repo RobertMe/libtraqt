@@ -15,7 +15,7 @@ protected slots:
 private:
     void addItems(QList<TraktShow*> &list, const QVariantList &items);
 
-    TraktRequest *buildRequest(TraktPerson *person);
+    TraktRequest *buildRequest(TraktPerson *person) const;
 };
 
 #endif // TRAKTPERSONSHOWSMODEL_H

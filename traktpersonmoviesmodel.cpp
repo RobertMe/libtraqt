@@ -7,7 +7,7 @@ TraktPersonMoviesModel::TraktPersonMoviesModel(TraktPerson *person, QObject *par
 {
 }
 
-TraktRequest *TraktPersonMoviesModel::buildRequest(TraktPerson *person)
+TraktRequest *TraktPersonMoviesModel::buildRequest(TraktPerson *person) const
 {
     TraktRequest *request = new TraktRequest();
     request->setPath(QString("/people/%1/movies").arg(person->ids()->trakt()));

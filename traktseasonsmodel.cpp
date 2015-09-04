@@ -8,7 +8,7 @@ TraktSeasonsModel::TraktSeasonsModel(TraktShow *show, QObject *parent) :
 {
 }
 
-TraktRequest *TraktSeasonsModel::buildRequest(TraktShow *show)
+TraktRequest *TraktSeasonsModel::buildRequest(TraktShow *show) const
 {
     TraktRequest *request = new TraktRequest();
     request->setPath(QString("/shows/%1/seasons").arg(show->ids()->trakt()));

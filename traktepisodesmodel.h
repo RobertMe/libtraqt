@@ -20,14 +20,14 @@ public:
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
-    TraktEpisode *convertItem(const QVariantMap &item);
+    TraktEpisode *convertItem(const QVariantMap &item) Q_DECL_OVERRIDE;
 
-    Q_INVOKABLE TraktEpisode *at(int i) const;
+    Q_INVOKABLE TraktEpisode *at(int i) const Q_DECL_OVERRIDE;
 
 private:
     TraktSeason *m_season;
 
-    TraktRequest *buildRequest(TraktSeason *season);
+    TraktRequest *buildRequest(TraktSeason *season) const;
 };
 
 #endif // TRAKTEPISODEMODEL_H

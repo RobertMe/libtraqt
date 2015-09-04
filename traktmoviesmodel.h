@@ -32,7 +32,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
-    TraktMovie *convertItem(const QVariantMap &item);
+    TraktMovie *convertItem(const QVariantMap &item) Q_DECL_OVERRIDE;
 
     Q_INVOKABLE TraktMovie *at(int i) const;
 };
