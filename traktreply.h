@@ -19,6 +19,7 @@ public:
     QVariantList asList();
 
     int statusCode();
+    QByteArray header(const QByteArray &headerName) const;
 
 private:
     TraktRequest *m_request;

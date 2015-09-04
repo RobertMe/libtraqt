@@ -39,6 +39,11 @@ int TraktReply::statusCode()
     return m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 }
 
+QByteArray TraktReply::header(const QByteArray &headerName) const
+{
+    return m_reply->rawHeader(headerName);
+}
+
 void TraktReply::parseReply()
 {
     QByteArray data = m_reply->readAll();

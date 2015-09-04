@@ -55,9 +55,11 @@ void TraktPaginatedModel<T>::onReplyReceived(TraktReply *reply)
         }
     }
 
+    int page = reply->header("X-Pagination-Page").toInt();
+    int pageCount = reply->header("X-Pagination-Page-Count").toInt();
     this->beginInsertRows(QModelIndex(), this->m_items.size(), this->m_items.size() + newItems.size() - 1);
     this->m_items.append(newItems);
-    m_canFetchMore = items.size() == 15;
+    m_canFetchMore = page < pageCount;
     this->endInsertRows();
 
     this->setLoading(false);
