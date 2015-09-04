@@ -1,6 +1,7 @@
 #include "traktcheckin.h"
 
 #include "traktids.h"
+#include "traktrequest.h"
 
 TraktCheckin::TraktCheckin(QObject *parent) :
     QObject(parent),

@@ -1,7 +1,5 @@
 #include "traktitem.h"
 
-#include "traktids.h"
-#include "traktimageset.h"
 #include "traktrequest.h"
 #include "traktreply.h"
 

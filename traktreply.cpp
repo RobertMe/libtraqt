@@ -2,6 +2,8 @@
 
 #include <QJsonDocument>
 
+#include "traktrequest.h"
+
 TraktReply::TraktReply(TraktRequest *request, QNetworkReply *reply, QObject *parent) :
     QObject(parent),
     m_request(request),

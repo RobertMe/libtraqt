@@ -8,6 +8,7 @@
 #include <QVariant>
 
 #include "traktrequest.h"
+#include "traktreply.h"
 
 TraktAuthenticator::TraktAuthenticator(const QString clientId, const QString &clientSecret, const QString &redirectUrl, QObject *parent) :
     QObject(parent),

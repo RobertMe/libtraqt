@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 
-#include "traktauthenticator.h"
-#include "traktrequest.h"
+class TraktAuthenticator;
+class TraktRequest;
 
 class TraktConnection : public QObject
 {

@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "traktmoviesmodel.h"
+class TraktMoviesModel;
 
 class TraktMovies : public QObject
 {

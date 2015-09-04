@@ -2,7 +2,6 @@
 #define TRAKTPEOPLEMODEL_H
 
 #include "traktmodel.h"
-#include "traktids.h"
 #include "traktperson.h"
 #include "traktpeoplefiltermodel.h"
 

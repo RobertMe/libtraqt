@@ -1,7 +1,6 @@
 #include "traktmodelbase.h"
 
 #include <QTimer>
-#include <QDebug>
 
 TraktModelBase::TraktModelBase(QObject *parent) :
     QAbstractItemModel(parent),

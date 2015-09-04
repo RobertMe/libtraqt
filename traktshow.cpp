@@ -2,8 +2,6 @@
 
 #include <QVariantMap>
 
-#include "traktpeoplemodel.h"
-
 TraktShow::TraktShow(QObject *parent) :
     TraktItem(parent),
     m_year(0),

@@ -3,8 +3,9 @@
 
 #include <QObject>
 
-#include "traktshowsmodel.h"
-
+class TraktShow;
+class TraktSeason;
+class TraktShowsModel;
 class TraktSeasonsModel;
 class TraktEpisodesModel;
 

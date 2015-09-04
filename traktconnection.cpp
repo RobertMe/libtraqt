@@ -5,8 +5,9 @@
 #include <QJsonDocument>
 #include <QUrlQuery>
 
-#include "traktreply.h"
+#include "traktauthenticator.h"
 #include "traktrequest.h"
+#include "traktreply.h"
 
 TraktConnection *TraktConnection::s_instance = 0;
 

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QNetworkRequest>
 
-#include "traktreply.h"
+class TraktReply;
 
 class TraktAuthenticator : public QObject
 {

@@ -1,6 +1,7 @@
 #include "traktrequest.h"
 
 #include "traktconnection.h"
+#include "traktreply.h"
 
 TraktRequest::TraktRequest(QObject *parent) :
     QObject(parent),

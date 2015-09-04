@@ -1,7 +1,5 @@
 #include "traktpeoplemodel.h"
 
-#include "traktpeoplefiltermodel.h"
-
 TraktPeopleModel::TraktPeopleModel(TraktIds *ids, QObject *parent) :
     TraktModel(buildRequest(ids), parent),
     m_cast(0),

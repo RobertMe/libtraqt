@@ -2,11 +2,11 @@
 #define TRAKTPEOPLE_H
 
 #include <QObject>
-#include <QHash>
 
-#include "traktpeoplemodel.h"
-#include "traktpersonmoviesmodel.h"
-#include "traktpersonshowsmodel.h"
+class TraktPerson;
+class TraktPeopleModel;
+class TraktMoviesModel;
+class TraktShowsModel;
 
 class TraktIds;
 
@@ -18,8 +18,8 @@ public:
 
     Q_INVOKABLE TraktPeopleModel *people(TraktIds *ids);
 
-    Q_INVOKABLE TraktPersonMoviesModel *getMovies(TraktPerson *person);
-    Q_INVOKABLE TraktPersonShowsModel *getShows(TraktPerson *person);
+    Q_INVOKABLE TraktMoviesModel *getMovies(TraktPerson *person);
+    Q_INVOKABLE TraktShowsModel *getShows(TraktPerson *person);
 
 };
 

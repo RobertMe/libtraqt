@@ -1,6 +1,6 @@
 #include "traktmovies.h"
 
-#include "traktrequest.h"
+#include "traktmoviesmodel.h"
 
 TraktMovies::TraktMovies(QObject *parent) :
     QObject(parent)

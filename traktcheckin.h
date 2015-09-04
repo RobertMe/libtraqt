@@ -1,7 +1,7 @@
 #ifndef TRAKTCHECKIN_H
 #define TRAKTCHECKIN_H
 
-#include "traktrequest.h"
+#include <QObject>
 
 class TraktIds;
 

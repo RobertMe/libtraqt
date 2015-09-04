@@ -1,5 +1,6 @@
 #include "traktshows.h"
 
+#include "traktshowsmodel.h"
 #include "traktseasonsmodel.h"
 #include "traktepisodesmodel.h"
 
