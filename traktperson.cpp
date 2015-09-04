@@ -128,6 +128,11 @@ void TraktPerson::setTitle(const QString &title)
     Q_UNUSED(title)
 }
 
+TraktImages *TraktPerson::image() const
+{
+    return m_images->headshot();
+}
+
 void TraktPerson::parse(const QVariantMap &data)
 {
     setBiography(data.value("biography").toString());
@@ -142,4 +147,9 @@ void TraktPerson::parse(const QVariantMap &data)
 QString TraktPerson::itemUrl() const
 {
     return QString("/people/%1").arg(ids()->trakt());
+}
+
+void TraktPerson::connectImageChanged(TraktImageSet *images) const
+{
+    connect(images, SIGNAL(headshotChanged()), this, SIGNAL(imageChanged()));
 }

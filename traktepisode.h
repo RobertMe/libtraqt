@@ -48,6 +48,8 @@ public:
     TraktSeason *season() const;
     void setSeason(TraktSeason *season);
 
+    virtual TraktImages *image() const Q_DECL_OVERRIDE;
+
     void parse(const QVariantMap &data) Q_DECL_OVERRIDE;
 
 signals:
@@ -62,6 +64,7 @@ signals:
 
 protected:
     QString itemUrl() const Q_DECL_OVERRIDE;
+    virtual void connectImageChanged(TraktImageSet *images) const Q_DECL_OVERRIDE;
 
 private:
     int m_number;

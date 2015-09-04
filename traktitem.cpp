@@ -42,8 +42,23 @@ TraktImageSet *TraktItem::images() const
 
 void TraktItem::setImages(TraktImageSet *images)
 {
+    if (m_images) {
+        disconnect(m_images, 0, this, 0);
+    }
     m_images = images;
+    if (m_images) {
+        connectImageChanged(m_images);
+    }
     emit imagesChanged();
+}
+
+TraktImages *TraktItem::image() const
+{
+    if (m_images) {
+        return m_images->poster();
+    }
+
+    return 0;
 }
 
 bool TraktItem::loaded() const
@@ -74,4 +89,9 @@ void TraktItem::onFullyLoaded(TraktReply *reply)
 {
     reply->deleteLater();
     parse(reply->asMap());
+}
+
+void TraktItem::connectImageChanged(TraktImageSet *images) const
+{
+    connect(images, SIGNAL(posterChanged()), this, SIGNAL(imageChanged()));
 }

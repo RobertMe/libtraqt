@@ -114,6 +114,11 @@ void TraktEpisode::setSeason(TraktSeason *season)
     emit seasonChanged();
 }
 
+TraktImages *TraktEpisode::image() const
+{
+    return m_images->screenshot();
+}
+
 void TraktEpisode::parse(const QVariantMap &data)
 {
     setTitle(data.value("title").toString());
@@ -131,4 +136,9 @@ void TraktEpisode::parse(const QVariantMap &data)
 QString TraktEpisode::itemUrl() const
 {
     return QString("/shows/%1/seasons/%2/episodes/%3").arg(m_season->show()->ids()->trakt()).arg(m_season->number()).arg(number());
+}
+
+void TraktEpisode::connectImageChanged(TraktImageSet *images) const
+{
+    connect(images, SIGNAL(screenshotChanged()), this, SIGNAL(imageChanged()));
 }
