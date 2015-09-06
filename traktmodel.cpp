@@ -1,5 +1,7 @@
 #include "traktmodel.h"
 
+#include "traktitem.h"
+
 template<class T>
 TraktModel<T>::TraktModel(TraktRequest *request, QObject *parent) :
     TraktModel(parent)
@@ -20,6 +22,51 @@ int TraktModel<T>::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_items.size();
+}
+
+template<class T>
+QVariant TraktModel<T>::data(const QModelIndex &index, int role) const
+{
+    TraktItem *item = get(index.row());
+
+    if (!item)
+        return QVariant();
+
+    switch (role) {
+    case RoleTitle:
+        return item->title();
+    case RoleIds:
+    {
+        QVariant var;
+        var.setValue(item->ids());
+        return var;
+    }
+    case RoleImages:
+    {
+        QVariant var;
+        var.setValue(item->images());
+        return var;
+    }
+    case RoleImage:
+    {
+        QVariant var;
+        var.setValue(item->image());
+        return var;
+    }
+    }
+
+    return QVariant();
+}
+
+template<class T>
+QHash<int, QByteArray> TraktModel<T>::roleNames() const
+{
+    QHash<int, QByteArray> roleNames;
+    roleNames.insert(RoleIds, "ids");
+    roleNames.insert(RoleTitle, "title");
+    roleNames.insert(RoleImages, "images");
+    roleNames.insert(RoleImage, "image");
+    return roleNames;
 }
 
 template<class T>

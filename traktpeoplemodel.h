@@ -13,13 +13,11 @@ class TraktPeopleModel : public TraktModel<TraktPerson*>
 public:
     enum Roles {
         RoleName = Qt::DisplayRole,
-        RoleIds = Qt::UserRole + 1,
-        RoleBiography,
+        RoleBiography  = TraktModel::RoleImage + 1,
         RoleBirthday,
         RoleDeath,
         RoleBirthplace,
-        RoleHomepage,
-        RoleImages
+        RoleHomepage
     };
 
     explicit TraktPeopleModel(TraktIds *ids, QObject *parent = 0);

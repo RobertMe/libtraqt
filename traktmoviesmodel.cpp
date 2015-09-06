@@ -13,14 +13,6 @@ QVariant TraktMoviesModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     switch (role) {
-    case RoleTitle:
-        return movie->title();
-    case RoleIds:
-    {
-        QVariant var;
-        var.setValue(movie->ids());
-        return var;
-    }
     case RoleYear:
         return movie->year();
     case RoleTagline:
@@ -47,22 +39,14 @@ QVariant TraktMoviesModel::data(const QModelIndex &index, int role) const
         return movie->genres();
     case RoleCertification:
         return movie->certification();
-    case RoleImages:
-    {
-        QVariant var;
-        var.setValue(movie->images());
-        return var;
-    }
     }
 
-    return QVariant();
+    return TraktPaginatedModel<TraktMovie*>::data(index, role);
 }
 
 QHash<int, QByteArray> TraktMoviesModel::roleNames() const
 {
-    QHash<int, QByteArray> roleNames;
-    roleNames.insert(RoleIds, "ids");
-    roleNames.insert(RoleTitle, "title");
+    QHash<int, QByteArray> roleNames = TraktPaginatedModel<TraktMovie*>::roleNames();
     roleNames.insert(RoleYear, "year");
     roleNames.insert(RoleTagline, "tagline");
     roleNames.insert(RoleOverview, "overview");
@@ -76,7 +60,6 @@ QHash<int, QByteArray> TraktMoviesModel::roleNames() const
     roleNames.insert(RoleLanguage, "language");
     roleNames.insert(RoleGenres, "genres");
     roleNames.insert(RoleCertification, "certification");
-    roleNames.insert(RoleImages, "images");
     return roleNames;
 }
 

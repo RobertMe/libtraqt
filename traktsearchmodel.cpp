@@ -74,49 +74,6 @@ void TraktSearchModel::fetchMore(const QModelIndex &parent)
     }
 }
 
-QVariant TraktSearchModel::data(const QModelIndex &index, int role) const
-{
-    TraktItem *item = at(index.row());
-
-    if (!item)
-        return QVariant();
-
-    switch (role) {
-    case RoleTitle:
-        return item->title();
-    case RoleIds:
-    {
-        QVariant var;
-        var.setValue(item->ids());
-        return var;
-    }
-    case RoleImages:
-    {
-        QVariant var;
-        var.setValue(item->images());
-        return var;
-    }
-    case RoleImage:
-    {
-        QVariant var;
-        var.setValue(item->image());
-        return var;
-    }
-    }
-
-    return QVariant();
-}
-
-QHash<int, QByteArray> TraktSearchModel::roleNames() const
-{
-    QHash<int, QByteArray> roleNames;
-    roleNames.insert(RoleIds, "ids");
-    roleNames.insert(RoleTitle, "title");
-    roleNames.insert(RoleImages, "images");
-    roleNames.insert(RoleImage, "image");
-    return roleNames;
-}
-
 TraktItem *TraktSearchModel::convertItem(const QVariantMap &item)
 {
     QString type = item.value("type").toString();

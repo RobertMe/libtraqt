@@ -16,9 +16,19 @@ template<class T>
 class TraktModel : public TraktModelBase
 {
 public:
+    enum Roles {
+        RoleTitle = Qt::DisplayRole,
+        RoleIds = Qt::UserRole + 1,
+        RoleImages,
+        RoleImage
+    };
+
     explicit TraktModel(TraktRequest *request, QObject *parent = 0);
 
     virtual int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
+
+    virtual QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+    virtual QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
     TraktItem *get(int i) const Q_DECL_OVERRIDE;
     virtual T at(int i) const;

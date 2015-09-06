@@ -45,16 +45,13 @@ QVariant TraktEpisodesModel::data(const QModelIndex &index, int role) const
     }
     }
 
-    return QVariant();
+    return TraktModel<TraktEpisode*>::data(index, role);
 }
 
 QHash<int, QByteArray> TraktEpisodesModel::roleNames() const
 {
-    QHash<int, QByteArray> roleNames;
-    roleNames.insert(RoleIds, "ids");
-    roleNames.insert(RoleTitle, "title");
+    QHash<int, QByteArray> roleNames = TraktModel<TraktEpisode*>::roleNames();
     roleNames.insert(RoleNumber, "number");
-    roleNames.insert(RoleImages, "images");
     return roleNames;
 }
 

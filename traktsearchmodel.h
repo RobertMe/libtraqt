@@ -13,12 +13,6 @@ class TraktSearchModel : public TraktPaginatedModel<TraktItem*>
     Q_FLAGS(Types)
     Q_ENUMS(Types)
 public:
-    enum Roles {
-        RoleTitle = Qt::DisplayRole,
-        RoleIds = Qt::UserRole + 1,
-        RoleImages,
-        RoleImage
-    };
     enum Type {
         TypeMovie = 1,
         TypeShow = 2,
@@ -40,9 +34,6 @@ public:
     void setYear(int year);
 
     virtual void fetchMore(const QModelIndex &parent) Q_DECL_OVERRIDE;
-
-    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
-    QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
     TraktItem *convertItem(const QVariantMap &item) Q_DECL_OVERRIDE;
 

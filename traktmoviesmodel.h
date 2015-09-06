@@ -9,9 +9,7 @@ class TraktMoviesModel : public TraktPaginatedModel<TraktMovie*>
     Q_OBJECT
 public:
     enum Roles {
-        RoleTitle = Qt::DisplayRole,
-        RoleIds = Qt::UserRole + 1,
-        RoleYear,
+        RoleYear = TraktModel::RoleImage + 1,
         RoleTagline,
         RoleOverview,
         RoleReleased,
@@ -23,8 +21,7 @@ public:
         RoleVotes,
         RoleLanguage,
         RoleGenres,
-        RoleCertification,
-        RoleImages
+        RoleCertification
     };
 
     explicit TraktMoviesModel(TraktRequest *request, QObject *parent = 0);

@@ -28,12 +28,6 @@ QVariant TraktSeasonsModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case RoleNumber:
         return season->number();
-    case RoleIds:
-    {
-        QVariant var;
-        var.setValue(season->ids());
-        return var;
-    }
     case RoleRating:
         return season->rating();
     case RoleVotes:
@@ -42,27 +36,19 @@ QVariant TraktSeasonsModel::data(const QModelIndex &index, int role) const
         return season->episodeCount();
     case RoleAiredEpisodes:
         return season->airedEpisodes();
-    case RoleImages:
-    {
-        QVariant var;
-        var.setValue(season->images());
-        return var;
-    }
     }
 
-    return QVariant();
+    return TraktModel<TraktSeason*>::data(index, role);
 }
 
 QHash<int, QByteArray> TraktSeasonsModel::roleNames() const
 {
-    QHash<int, QByteArray> roleNames;
-    roleNames.insert(RoleIds, "ids");
+    QHash<int, QByteArray> roleNames = TraktModel<TraktSeason*>::roleNames();
     roleNames.insert(RoleNumber, "number");
     roleNames.insert(RoleRating, "rating");
     roleNames.insert(RoleVotes, "votes");
     roleNames.insert(RoleEpisodeCount, "episodeCount");
     roleNames.insert(RoleAiredEpisodes, "airedEpisodes");
-    roleNames.insert(RoleImages, "images");
     return roleNames;
 }
 

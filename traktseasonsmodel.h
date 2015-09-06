@@ -10,13 +10,11 @@ class TraktSeasonsModel : public TraktModel<TraktSeason*>
 public:
     enum Roles {
         RoleNumber = Qt::DisplayRole,
-        RoleIds = Qt::UserRole + 1,
         RoleRating,
         RoleVotes,
         RoleEpisodeCount,
         RoleAiredEpisodes,
-        RoleOverview,
-        RoleImages
+        RoleOverview
     };
 
     explicit TraktSeasonsModel(TraktShow *show, QObject *parent = 0);
