@@ -7,7 +7,7 @@ template<class T>
 class TraktPaginatedModel : public TraktModel<T>
 {
 public:
-    explicit TraktPaginatedModel(TraktRequest *request, QObject *parent = 0);
+    explicit TraktPaginatedModel(TraktRequest *request, QObject *parent = 0, bool sendRequest = true);
 
     virtual void fetchMore(const QModelIndex &parent) Q_DECL_OVERRIDE;
     bool canFetchMore(const QModelIndex &parent) const Q_DECL_OVERRIDE;

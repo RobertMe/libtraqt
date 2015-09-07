@@ -7,7 +7,7 @@
 #include "traktperson.h"
 
 TraktSearchModel::TraktSearchModel(QObject *parent) :
-    TraktPaginatedModel(buildRequest(), parent),
+    TraktPaginatedModel(buildRequest(), parent, false),
     m_type(TypeMovie | TypeShow),
     m_year(0)
 {

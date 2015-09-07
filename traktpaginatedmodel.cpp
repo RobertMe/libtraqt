@@ -1,7 +1,7 @@
 #include "traktpaginatedmodel.h"
 
 template<class T>
-TraktPaginatedModel<T>::TraktPaginatedModel(TraktRequest *request, QObject *parent) :
+TraktPaginatedModel<T>::TraktPaginatedModel(TraktRequest *request, QObject *parent, bool sendRequest) :
     TraktModel<T>(parent),
     m_request(request),
     m_canFetchMore(false),
@@ -9,7 +9,9 @@ TraktPaginatedModel<T>::TraktPaginatedModel(TraktRequest *request, QObject *pare
 {
     this->connect(request, &TraktRequest::replyReceived, this, &TraktPaginatedModel::onReplyReceived);
     m_request->setLimit(15);
-    fetchMore(QModelIndex());
+    if (sendRequest) {
+        fetchMore(QModelIndex());
+    }
 }
 
 template<class T>
