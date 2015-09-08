@@ -133,7 +133,13 @@ TraktImages *TraktImageSet::createImages(QVariant imageData)
 {
     if (!imageData.isValid()) {
         return 0;
-    } else {
-        return new TraktImages(imageData.toMap(), this);
+    }
+
+    QVariantMap imageMap = imageData.toMap();
+    if (!imageMap.value("full").isValid() && !imageMap.value("medium").isValid() && !imageMap.value("thumb").isValid()) {
+        return 0;
+    }
+    else {
+        return new TraktImages(imageMap, this);
     }
 }
