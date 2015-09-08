@@ -118,7 +118,9 @@ void TraktSeason::setShow(TraktShow *show)
 
 QString TraktSeason::title() const
 {
-    return QString::number(m_number);
+    //: Title of the season details page
+    //% "Season %1"
+    return qtTrId("season-title").arg(QString::number(m_number));
 }
 
 void TraktSeason::setTitle(const QString &title)
