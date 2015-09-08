@@ -102,7 +102,16 @@ TraktShow *TraktSeason::show() const
 
 void TraktSeason::setShow(TraktShow *show)
 {
+    if (m_show) {
+        disconnect(show, 0 , this, 0);
+    }
+
     m_show = show;
+
+    if (m_show) {
+        connect(show, &TraktShow::imageChanged, this, &TraktItem::imageChanged);
+    }
+
     setParent(show);
     emit showChanged();
 }
@@ -115,6 +124,17 @@ QString TraktSeason::title() const
 void TraktSeason::setTitle(const QString &title)
 {
     Q_UNUSED(title)
+}
+
+TraktImages *TraktSeason::image() const
+{
+    if (m_images->poster()) {
+        return m_images->poster();
+    } else if (m_show) {
+        return m_show->image();
+    }
+
+    return 0;
 }
 
 void TraktSeason::parse(const QVariantMap &data)

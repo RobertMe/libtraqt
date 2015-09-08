@@ -45,6 +45,8 @@ public:
     QString title() const Q_DECL_OVERRIDE;
     void setTitle(const QString &title) Q_DECL_OVERRIDE;
 
+    virtual TraktImages *image() const Q_DECL_OVERRIDE;
+
     void parse(const QVariantMap &data) Q_DECL_OVERRIDE;
     void load() Q_DECL_OVERRIDE;
 
