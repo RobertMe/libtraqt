@@ -3,6 +3,7 @@
 #include "traktitem.h"
 #include "traktmovie.h"
 #include "traktshow.h"
+#include "traktseason.h"
 #include "traktepisode.h"
 #include "traktperson.h"
 
@@ -82,7 +83,11 @@ TraktItem *TraktSearchModel::convertItem(const QVariantMap &item)
     } else if (type == "show") {
         return new TraktShow(item.value("show").toMap(), this);
     } else if (type == "episode") {
-        return new TraktEpisode(item.value("episode").toMap());
+        QVariantMap episodeMap = item.value("episode").toMap();
+        TraktShow *show = new TraktShow(item.value("show").toMap(), this);
+        TraktSeason *season = new TraktSeason(show);
+        season->setNumber(episodeMap.value("season").toInt());
+        return new TraktEpisode(episodeMap, season);
     } else if (type == "person") {
         return new TraktPerson(item.value("person").toMap(), this);
     }
