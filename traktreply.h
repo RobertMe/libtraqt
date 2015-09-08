@@ -12,13 +12,14 @@ class TraktReply : public QObject
 public:
     explicit TraktReply(TraktRequest *request, QNetworkReply *reply, QObject *parent = 0);
 
-    TraktRequest *request();
+    TraktRequest *request() const;
 
-    QVariant value();
-    QVariantMap asMap();
-    QVariantList asList();
+    QVariant value() const;
+    QVariantMap asMap() const;
+    QVariantList asList() const;
+    bool isValid() const;
 
-    int statusCode();
+    int statusCode() const;
     QByteArray header(const QByteArray &headerName) const;
 
 private:

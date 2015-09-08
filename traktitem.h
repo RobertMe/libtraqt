@@ -16,6 +16,8 @@ class TraktItem : public QObject
     Q_PROPERTY(TraktImageSet *images READ images WRITE setImages NOTIFY imagesChanged)
     Q_PROPERTY(TraktImages *image READ image NOTIFY imageChanged)
     Q_PROPERTY(bool loaded READ loaded NOTIFY loadedChanged)
+    Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
+    Q_PROPERTY(bool error READ error NOTIFY errorChanged)
 public:
     explicit TraktItem(QObject *parent = 0);
 
@@ -31,6 +33,8 @@ public:
     virtual TraktImages *image() const;
 
     bool loaded() const;
+    bool loading() const;
+    bool error() const;
 
     virtual void parse(const QVariantMap &data) = 0;
     Q_INVOKABLE virtual void load();
@@ -41,11 +45,15 @@ signals:
     void imagesChanged();
     void imageChanged();
     void loadedChanged();
+    void loadingChanged();
+    void errorChanged();
 
 protected:
     virtual QString itemUrl() const = 0;
     virtual void connectImageChanged(TraktImageSet *images) const;
     void setLoaded(bool loaded);
+    void setLoading(bool loading);
+    void setError(bool error);
 
     TraktIds *m_ids;
     QString m_title;
@@ -53,6 +61,8 @@ protected:
 
 private:
     bool m_loaded;
+    bool m_loading;
+    bool m_error;
 
 private slots:
     void onFullyLoaded(TraktReply *reply);

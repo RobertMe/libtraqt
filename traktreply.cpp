@@ -14,27 +14,32 @@ TraktReply::TraktReply(TraktRequest *request, QNetworkReply *reply, QObject *par
     parseReply();
 }
 
-TraktRequest *TraktReply::request()
+TraktRequest *TraktReply::request() const
 {
     return m_request;
 }
 
-QVariant TraktReply::value()
+QVariant TraktReply::value() const
 {
     return m_value;
 }
 
-QVariantMap TraktReply::asMap()
+QVariantMap TraktReply::asMap() const
 {
     return m_value.toMap();
 }
 
-QVariantList TraktReply::asList()
+QVariantList TraktReply::asList() const
 {
     return m_value.toList();
 }
 
-int TraktReply::statusCode()
+bool TraktReply::isValid() const
+{
+    return m_value.isValid();
+}
+
+int TraktReply::statusCode() const
 {
     return m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 }
